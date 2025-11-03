@@ -1,0 +1,163 @@
+/* ✅ Main Container - Full Browser Width */
+.seller-container {
+  width: 95vw;           /* Use full viewport width */
+  max-width: none;        /* Remove previous max-width restriction */
+  margin: 0;              /* Remove horizontal centering */
+  padding: 20px;
+  background-color: #f4f7fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+@media (min-width: 1200px) {
+  .seller-container {
+    padding-left: 40px;
+    padding-right: 40px; /* Optional: adds comfort at extreme widths */
+  }
+}
+
+/* ✅ Title */
+.seller-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* ✅ Product Form */
+.seller-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 25px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.seller-form input,
+.seller-form textarea {
+  flex: 1 1 48%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border 0.2s ease;
+}
+
+.seller-form input:focus,
+.seller-form textarea:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
+.seller-form textarea {
+  flex: 1 1 100%;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.save-btn {
+  flex: 1 1 100%;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.save-btn:hover {
+  background-color: #125ea6;
+}
+
+/* ✅ Table Section */
+.seller-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.seller-table th,
+.seller-table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.seller-table th {
+  background-color: #1976d2;
+  color: white;
+  text-transform: uppercase;
+}
+
+.seller-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* ✅ Buttons */
+.edit-btn {
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.edit-btn:hover {
+  background: #e68900;
+}
+
+.delete-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #d32f2f;
+}
+
+.patch-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  margin: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.patch-btn:hover {
+  background: #3e8e41;
+}
+
+/* ✅ Responsive Layout */
+@media (max-width: 768px) {
+  .seller-form input,
+  .seller-form textarea {
+    flex: 1 1 100%;
+  }
+
+  .seller-table th,
+  .seller-table td {
+    font-size: 13px;
+    padding: 8px;
+  }
+}

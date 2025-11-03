@@ -1,0 +1,85 @@
+/* ========== General Layout ========== */
+.home-container {
+  width: 95vw;
+  max-width: none;
+  background-color: #fafafa;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+
+/* ===== Top Carousel Section ===== */
+.carousel-section {
+  width: 100vw;
+  overflow: hidden;
+  text-align: center;
+  background-color: #0ebea9;
+}
+
+
+.carousel-title {
+  font-size: 1.8rem;
+  color: #fff;
+  padding: 10px 0;
+}
+
+
+.carousel-wrapper {
+  width: 100vw;
+  height: 45vh;
+  overflow: hidden;
+}
+
+
+.carousel-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* ===== Products Section ===== */
+.products-section {
+  width: 100vw;
+  padding: 30px 10px;             /* Less horizontal padding allows full width usage */
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+.section-title {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.products-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Exactly 5 cards per row */
+  gap: 25px;
+  box-sizing: border-box;
+  justify-items: center;
+}
+
+.no-products {
+  font-size: 1rem;
+  color: #666;
+}
+
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    height: 30vh;
+  }
+
+  .products-section {
+    padding: 20px 4px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+  }
+}

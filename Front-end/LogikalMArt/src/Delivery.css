@@ -1,0 +1,105 @@
+.delivery-dashboard {
+  width: 95vw;                    /* Take full viewport width */
+  max-width: none;                 /* Remove any restrictions */
+  margin: 0;                       /* Remove any centering */
+  min-height: 100vh;               /* Fill full screen height */
+  padding: 20px;
+  background-color: #fdfdfd;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.orders-table th {
+  background-color: #f4f4f4;
+}
+
+.status.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.status.shipped {
+  color: blue;
+  font-weight: bold;
+}
+
+.status.delivered {
+  color: green;
+  font-weight: bold;
+}
+
+.btn {
+  padding: 6px 12px;
+  margin: 3px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn.accept {
+  background-color: #007bff;
+}
+
+.btn.deliver {
+  background-color: #28a745;
+}
+
+.btn.confirm {
+  background-color: #28a745;
+}
+
+.btn.cancel {
+  background-color: #dc3545;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}

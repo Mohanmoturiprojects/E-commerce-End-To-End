@@ -1,0 +1,214 @@
+/* === Reset styles for full-width layout === */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+/* === Page wrapper === */
+.mobiles-main {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 36px 0; 
+  width: 95vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #fafcff;
+  position: relative;
+  overflow-x: hidden; /* Extra safe */
+}
+
+/* === Sidebar on right, sticky with top/right offset === */
+.sidebar {
+  width: 240px;
+  background-color: #b2cfdb36;
+  padding: 20px;
+  border-right: 2px solid #f3bfb1;
+}
+.sidebar-bg {
+  width: 240px;           
+  min-height: 100vh;    
+  background: #f5f5f5;    
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* === Main content area (Left of sidebar) === */
+.mobiles-container {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+  margin-right: 32px;
+}
+
+/* === Title === */
+.mobiles-title {
+  font-size: 2rem;
+  color: #0b5394;
+  margin-bottom: 12px;
+  text-align: center;         
+  width: 100%;                
+  display: block;
+}
+
+/* === Grid: 4 cards per row, fills 100% container === */
+.mobiles-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin: 0;
+}
+
+/* === Card styling === */
+.mobile-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.11);
+  transition: 0.22s;
+}
+
+.mobile-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* === Image wrapper and image === */
+.mobile-image-wrapper {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.mobile-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* === Details and text === */
+.mobile-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.mobile-name {
+  font-weight: 650;
+  font-size: 1.13rem;
+  color: #293248;
+}
+
+.mobile-price {
+  color: #37a74a;
+  font-weight: 700;
+  font-size: 1.12rem;
+}
+
+.mobile-stock {
+  font-size: 1rem;
+  color: #0d8050;
+}
+
+.mobile-stock.out {
+  color: #d32f2f;
+}
+
+/* === Quantity controller === */
+.quantity-controller {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-btn {
+  padding: 4px 13px;
+  border: none;
+  border-radius: 7px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.23s;
+}
+
+.quantity-btn:hover:not(:disabled) {
+  background-color: #368f3f;
+}
+
+.quantity-value {
+  min-width: 22px;
+  text-align: center;
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+/* === Responsive: reduce columns, stack on mobile === */
+@media (max-width: 1300px) {
+  .mobiles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .sidebar {
+    top: 40px;
+  }
+}
+@media (max-width: 900px) {
+  .mobiles-main {
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 26px;
+    width: 100vw;
+  }
+  .sidebar {
+    position: relative;
+    width: 98vw;
+    max-width: 98vw;
+    margin: 0 auto 18px auto;
+    border-radius: 14px;
+    top: 0;
+    right: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.11);
+  }
+  .mobiles-container {
+    margin-right: 0;
+  }
+  .mobiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+@media (max-width: 600px) {
+  .mobiles-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .sidebar {
+    padding: 13px 3vw;
+    font-size: 14px;
+  }
+  .mobiles-title {
+    font-size: 1.18rem;
+    margin-left: 3px;
+  }
+  .mobile-card {
+    padding: 11px;
+  }
+}

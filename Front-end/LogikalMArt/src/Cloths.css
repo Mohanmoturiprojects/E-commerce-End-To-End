@@ -1,0 +1,155 @@
+.cloths-main {
+  display: flex;
+  min-height: 100vh;
+  background-color: #b6dcd84b;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #b2cfdb36;
+  padding: 20px;
+  border-right: 2px solid #f3bfb1;
+}
+
+.sidebar h3 {
+  margin-bottom: 15px;
+  color: #f27c5f;
+  text-align: center;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+/* Main Container */
+.cloths-container {
+  flex: 1;
+  padding: 30px;
+  text-align: center;
+}
+
+.title-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.title-icon {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.cloths-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #f27c5f;
+  text-align: center;
+}
+
+/* Grid */
+.cloths-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+/* Cloth Card */
+.cloth-card {
+  width: 220px;
+  background: #fff;
+  border: 1px solid #f3bfb1;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease;
+}
+
+.cloth-card:hover {
+  transform: scale(1.05);
+}
+
+.cloth-image-wrapper {
+  width: 100%;
+  height: 230px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.cloth-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cloth-details {
+  margin-top: 10px;
+}
+
+.cloth-name {
+  font-size: 17px;
+  color: #f27c5f;
+  font-weight: 600;
+}
+
+.cloth-price {
+  font-size: 15px;
+  color: #333;
+  margin: 5px 0;
+}
+
+.cloth-stock {
+  font-size: 14px;
+  color: green;
+}
+
+.cloth-stock.out {
+  color: red;
+}
+
+/* Quantity Controls */
+.quantity-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.quantity-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background-color: #ffae94;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.quantity-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}

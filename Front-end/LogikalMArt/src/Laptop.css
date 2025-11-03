@@ -1,0 +1,153 @@
+/* Main container */
+.laptops-container {
+  padding: 40px 60px;
+  background: #bde3bf;
+  min-height: 100vh;
+}
+
+.laptops-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 30px;
+}
+
+/* Grid layout */
+.laptops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+/* Card styling */
+.laptop-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 250px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.laptop-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Image section */
+.laptop-image-wrapper {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-bottom: 1px solid #a6cad2;
+}
+
+.laptop-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.laptop-card:hover .laptop-image {
+  transform: scale(1.1);
+}
+
+/* Details section */
+.laptop-details {
+  padding: 15px;
+  text-align: center;
+}
+
+.laptop-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.laptop-price {
+  font-size: 1rem;
+  color: #007bff;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Add to Cart button */
+.buy-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buy-btn:hover {
+  background: #0056b3;
+}
+.quantity-controller {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.quantity-btn {
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #72d8e4;
+  transition: 0.2s;
+}
+
+.quantity-btn:hover {
+  background-color: #27b04c;
+}
+
+.quantity-value {
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .laptops-container {
+    padding: 20px;
+  }
+
+  .laptops-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .laptop-image-wrapper {
+    height: 180px;
+  }
+
+  .laptop-name {
+    font-size: 0.95rem;
+  }
+
+  .laptop-price {
+    font-size: 0.9rem;
+  }
+
+  .buy-btn {
+    padding: 6px 12px;
+  }
+}

@@ -1,0 +1,181 @@
+/* 🌸 Main container layout */
+.jeanes-main {
+  display: flex;
+  background-color: #d3e0ea31;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  margin: 20px;
+  border-radius: 14px;
+}
+
+/* 🧭 Sidebar Filters */
+.sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  border-radius: 12px 0 0 12px;
+}
+.sidebar h3 {
+  font-size: 20px;
+  color: #0d3d8e;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+.filter-group {
+  margin-bottom: 20px;
+}
+.filter-group label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+.filter-group select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.3s;
+}
+.filter-group select:focus {
+  border-color: #0d3d8e;
+}
+
+/* 👖 Jeans Display */
+.jeanes-container {
+  flex: 1;
+  padding: 30px; /* Inner padding, not affecting outer width */
+  min-width: 0;  /* Prevents overflow in flexbox */
+}
+
+.jeanes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  /* No width: 100% or fixed widths here */
+}
+.jeanes-title {
+  text-align: center;
+  color: #0d3d8e;
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+
+
+/* 🧺 Product Card */
+.jean-card {
+  width: 240px;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.jean-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 🖼️ Product image */
+.jean-image-wrapper {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.jean-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.jean-card:hover .jean-image {
+  transform: scale(1.05);
+}
+
+/* 📜 Product details */
+.jean-details {
+  margin-top: 10px;
+}
+.jean-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jean-price {
+  color: #4CAF50;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 5px 0;
+}
+.jean-stock {
+  font-size: 14px;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+.jean-stock.out {
+  color: #c62828;
+}
+
+/* ➕➖ Quantity buttons */
+.quantity-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.quantity-btn {
+  background-color: #0d3d8e;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.quantity-btn:hover {
+  background-color: #1a5bbb;
+}
+.quantity-value {
+  min-width: 24px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Add to cart button */
+.jean-details .add-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.jean-details .add-btn:hover {
+  background-color: #388e3c;
+}
+.jean-details .add-btn:disabled {
+  background-color: #94cb97;
+  cursor: not-allowed;
+}
+
+/* 🧾 Toast customization (optional) */
+.Toastify__toast {
+  border-radius: 10px !important;
+  font-family: "Poppins", sans-serif;
+}

@@ -1,0 +1,125 @@
+/* Container */
+.smarttv-container {
+  padding: 40px 60px;
+  background: #f9f9fc;
+  min-height: 100vh;
+}
+
+.smarttv-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 30px;
+}
+
+/* Grid layout */
+.smarttv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+/* Card style */
+.smarttv-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 260px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.smarttv-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Image section */
+.smarttv-image-wrapper {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-bottom: 1px solid #eee;
+}
+
+.smarttv-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.smarttv-card:hover .smarttv-image {
+  transform: scale(1.1);
+}
+
+/* Details */
+.smarttv-details {
+  padding: 15px;
+  text-align: center;
+}
+
+.smarttv-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.smarttv-price {
+  font-size: 1rem;
+  color: #007bff;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Button */
+.buy-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buy-btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .smarttv-container {
+    padding: 20px;
+  }
+
+  .smarttv-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .smarttv-image-wrapper {
+    height: 180px;
+  }
+
+  .smarttv-name {
+    font-size: 0.95rem;
+  }
+
+  .smarttv-price {
+    font-size: 0.9rem;
+  }
+
+  .buy-btn {
+    padding: 6px 12px;
+  }
+}

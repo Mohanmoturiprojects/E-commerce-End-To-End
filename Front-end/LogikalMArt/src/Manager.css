@@ -1,0 +1,66 @@
+.manager-container {
+  width: 95vw;         /* Full viewport width */
+  max-width: none;      /* Remove any limit */
+  margin: 0;            /* No center margin */
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+  background: #f9f9f9;
+  min-height: 100vh;    /* Nice fill for the browser window */
+}
+
+.dropdown {
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+.manager-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.manager-table th,
+.manager-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.edit-btn,
+.delete-btn,
+.add-btn,
+.update-btn {
+  margin: 5px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+  color: white;
+}
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+.add-btn,
+.update-btn {
+  background-color: #3498db;
+  color: white;
+  margin-top: 10px;
+}
+
+.product-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.product-form input {
+  padding: 8px;
+  flex: 1;
+  min-width: 150px;
+}

@@ -1,0 +1,259 @@
+/* Global Box Sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Body Reset */
+body {
+  margin: 0;
+  padding: 0;
+  background: #f8fafc;
+  font-family: "Poppins", sans-serif;
+  width: 95vw;
+  max-width: none;
+  overflow-x: hidden;
+}
+
+/* 🌸 Main container layout */
+.formals-main {
+  display: flex;
+  background-color: #e3f2fd31;
+  min-height: 100vh;
+  width: 95vw;
+  max-width:none;
+  margin: 20px;
+  padding: 0;
+  overflow-x: hidden;
+  border-radius: 14px; /* Optional: for a softer look */
+}
+
+/* 🧭 Sidebar Filters */
+.sidebar {
+  margin-top: 80px;
+  width: 230px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar h3 {
+  font-size: 20px;
+  color: #0a2540;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.filter-group select:focus {
+  border-color: #0a2540;
+}
+
+/* 👔 Formals Display */
+.formals-container {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Title */
+.formals-title {
+  text-align: center;
+  color: #0a2540;
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Grid: 4 cards per row */
+.formals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  justify-items: center;
+}
+
+/* 🧺 Product Card */
+.formal-card {
+  width: 100%;
+  max-width: 250px;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0, 123, 255, 0.15);
+}
+
+.formal-card.out-of-stock {
+  opacity: 0.6;
+  pointer-events: none;
+  filter: grayscale(0.5);
+}
+
+/* 🖼️ Image */
+.formal-image-wrapper {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.formal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.formal-image:hover {
+  transform: scale(1.05);
+}
+
+/* 📜 Product details */
+.formal-details {
+  margin-top: 10px;
+}
+
+.formal-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.formal-price {
+  color: #007bff;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 5px 0;
+}
+
+/* 🟢 Stock info */
+.formal-stock {
+  font-size: 14px;
+  color: #00b894;
+  margin-bottom: 10px;
+}
+
+.formal-stock.out {
+  color: #d63031;
+}
+
+/* ➕➖ Quantity buttons */
+.quantity-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-btn {
+  background-color: #0a2540;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.quantity-btn:hover {
+  background-color: #004080;
+}
+
+.quantity-value {
+  min-width: 24px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 🛒 Buy Button */
+.buy-btn {
+  margin-top: 10px;
+  background: linear-gradient(90deg, #007bff, #00b894);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buy-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #0056b3, #009874);
+}
+
+/* 🧾 Toast customization */
+.Toastify__toast {
+  border-radius: 10px !important;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 1200px) {
+  .formals-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .formals-main {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    box-shadow: none;
+    display: flex;
+    justify-content: space-around;
+     
+  }
+  .formals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .formals-grid {
+    grid-template-columns: 1fr;
+  }
+  .formal-card {
+    max-width: 100%;
+  }
+  .formal-image-wrapper {
+    height: 200px;
+  }
+}

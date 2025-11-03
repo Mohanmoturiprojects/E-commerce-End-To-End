@@ -1,0 +1,199 @@
+/* 🌟 Product Details Page */
+.product-details {
+  width: 95vw;
+  max-width: none;
+  margin: 15px auto;
+  padding: 10px;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  background-color: #469ab602;
+  border-radius: 16px;
+}
+
+/* 🔙 Back Button */
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 17px;
+  color: #007bff;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.back-btn:hover {
+  color: #0056b3;
+}
+
+/* 🧩 Product Container */
+.details-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+  background: #c4faca6e;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* 🖼️ Product Image */
+.details-container img {
+  width: 350px;
+  height: 350px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  transition: transform 0.3s ease;
+}
+.details-container img:hover {
+  transform: scale(1.05);
+}
+
+/* 📄 Product Info */
+.info {
+  flex: 1;
+}
+
+.info h2 {
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.info p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.info h3 {
+  font-size: 22px;
+  color: #e63946;
+  margin: 10px 0;
+}
+
+/* 🟢 Availability */
+.availability {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.availability.in-stock {
+  color: #28a745;
+}
+.availability.out-stock {
+  color: #dc3545;
+}
+
+/* 🔢 Quantity Counter */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  gap: 10px;
+}
+
+.quantity-control button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.quantity-control button:hover {
+  background: #0056b3;
+}
+
+.quantity-control span {
+  font-size: 18px;
+  font-weight: 500;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* ✅ Product Options */
+.product-options {
+  margin: 20px 0;
+}
+
+.option-group {
+  margin-bottom: 18px;
+}
+
+.option-group h4 {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f4f6f8;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #d0d0d0;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.checkbox-label:hover {
+  background: #e9f2ff;
+  border-color: #007bff;
+}
+
+.checkbox-label input {
+  transform: scale(1.1);
+}
+
+/* 🛒 Add to Cart Button */
+.info button {
+  background: #0e5263;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 15px;
+}
+.info button:hover {
+  background: #6400e6;
+  transform: scale(1.05);
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .details-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .details-container img {
+    width: 80%;
+    height: auto;
+  }
+
+  .info {
+    text-align: center;
+  }
+
+  .quantity-control {
+    justify-content: center;
+  }
+}

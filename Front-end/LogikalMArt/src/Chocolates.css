@@ -1,0 +1,203 @@
+/* 🌸 Main container layout */
+.chocolates-main {
+  display: flex;
+  min-height: 100vh;
+  background-color: #b8cae246;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* 🧭 Sidebar Filters */
+.sidebar {
+  width: 220px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-right: 2px solid #e0e0e0;
+  border-radius: 12px 0 0 12px;
+}
+
+.sidebar h3 {
+  text-align: center;
+  color: #d46a6a;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.filter-group select:focus {
+  border-color: #d46a6a;
+}
+
+/* 🍫 Main Content Container */
+.chocolates-container {
+  flex: 1;
+  padding: 20px;
+  min-width: 0; /* Allow container to shrink */
+  text-align: center;
+}
+
+/* Grid layout using flexbox */
+.chocolates-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center cards */
+  gap: 25px;
+}
+
+/* Title */
+.chocolates-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #d46a6a;
+  margin-bottom: 30px;
+}
+
+/* 🍫 Product Card */
+.choco-card {
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.25s ease;
+  text-align: center;
+  padding-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.choco-card:hover {
+  transform: scale(1.05);
+}
+
+/* 🍫 Product Image */
+.choco-image {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* 🍫 Product Details */
+.choco-details {
+  padding: 10px 15px;
+  color: #333;
+}
+
+.choco-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #d46a6a;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.choco-price {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.choco-stock {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: green;
+}
+
+.choco-stock.out {
+  color: red;
+}
+
+/* Quantity controls */
+.quantity-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background-color: #d46a6a;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.quantity-btn:hover {
+  background-color: #a43f3f;
+}
+
+.quantity-value {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1000px) {
+  .choco-card {
+    width: 180px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .choco-card {
+    width: 150px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .chocolates-main {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 15px;
+  }
+
+  .chocolates-container {
+    width: 100%;
+    padding: 0;
+  }
+
+  .choco-card {
+    width: 100%;
+    max-width: 280px;
+  }
+}

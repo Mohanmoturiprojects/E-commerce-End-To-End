@@ -1,0 +1,176 @@
+.toys-main {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-right: 2px solid #e0e0e0;
+}
+
+.sidebar h3 {
+  text-align: center;
+  color: #ff7f50;
+  margin-bottom: 15px;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+/* Main Container */
+.toys-container {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Title */
+.toys-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ff7f50;
+}
+
+/* Grid using flexbox */
+.toys-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the cards */
+  gap: 20px;
+}
+
+/* Card */
+.toy-card {
+  width: 220px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toy-card:hover {
+  transform: scale(1.05);
+}
+
+/* Image */
+.toy-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* Details */
+.toy-details {
+  padding: 10px;
+  text-align: center;
+}
+
+.toy-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff7f50;
+  margin-bottom: 5px;
+}
+
+.toy-price {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.toy-stock {
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: green;
+}
+
+.toy-stock.out {
+  color: red;
+}
+
+/* Quantity Controller */
+.quantity-controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background-color: #ff7f50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.quantity-value {
+  font-size: 14px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Responsive */
+@media screen and (max-width: 1000px) {
+  .toy-card {
+    width: 180px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .toy-card {
+    width: 150px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .toys-main {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 15px;
+  }
+
+  .toys-container {
+    width: 100%;
+    padding: 0;
+  }
+
+  .toy-card {
+    width: 100%;
+    max-width: 280px;
+  }
+}
