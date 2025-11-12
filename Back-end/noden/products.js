@@ -1,50 +1,58 @@
+// products.js
 import express from "express";
-import mysql from "mysql2";
+import { Product } from "./models/product.js";
+import { Op } from "sequelize";
 
-const router = express.Router();
+export const productsRoute = express.Router();
 
-// ✅ MySQL connection
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Mohan@234",
-  database: "logikal",
+// ✅ GET all products (optional search)
+
+productsRoute.get("/", async (req, res) => {
+  try {
+    const search = req.query.q;
+    let products;
+
+    if (search) {
+      products = await Product.findAll({
+        where: {
+          [Op.or]: [
+            { name: { [Op.like]: `%${search}%` } },
+            { catagory: { [Op.like]: `%${search}%` } },
+            { description: { [Op.like]: `%${search}%` } },
+          ],
+        },
+      });
+    } else {
+      products = await Product.findAll();
+    }
+
+    res.json(products);
+  } catch (error) {
+    console.error("❌ Error fetching products:", error);
+    res.status(500).json({
+      message: "Error fetching products",
+      error: error.message,
+    });
+  }
 });
 
-db.connect((err) => {
-  if (err) console.error("❌ MySQL connection failed:", err);
-  else console.log("✅ Connected to MySQL for products");
-});
 
+// ✅ GET product by ID (includes JSON options)
+productsRoute.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByPk(id);
 
-// ✅ GET all products (with optional search)
-router.get("/", (req, res) => {
-  const search = req.query.q;
-  let sql = search
-    ? "SELECT * FROM products WHERE name LIKE ?"
-    : "SELECT * FROM products";
-
-  db.query(sql, search ? [`%${search}%`] : [], (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
-});
-
-
-// ✅ GET single product by ID
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  const sql = "SELECT * FROM products WHERE id = ?";
-
-  db.query(sql, [id], (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-
-    if (results.length === 0) {
+    if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    res.json(results[0]);
-  });
+    res.json(product);
+  } catch (error) {
+    console.error("❌ Error fetching product:", error);
+    res.status(500).json({
+      message: "Error fetching product",
+      error: error.message,
+    });
+  }
 });
-
-export const productsRoute = router;

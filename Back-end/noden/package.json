@@ -1,7 +1,7 @@
 {
   "name": "noden",
   "version": "1.0.0",
-  "type": "module",            
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,10 +15,13 @@
     "axios": "^1.12.2",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mysql": "^2.18.1",
-    "mysql2": "^3.15.2",
-    "nodemon": "^3.1.10"
+    "mysql2": "^3.15.3",
+    "nodemailer": "^7.0.10",
+    "nodemon": "^3.1.10",
+    "sequelize": "^6.37.7"
   }
 }

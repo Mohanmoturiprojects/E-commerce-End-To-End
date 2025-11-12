@@ -1,146 +1,87 @@
 // seller.js
 import express from "express";
-import mysql from "mysql2";
+import { Product } from "./models/product.js";
 
 export const sellerRoute = express.Router();
 
-// ✅ MySQL connection
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Mohan@234",
-  database: "logikal",
-});
-
 // ✅ Create (Insert product)
-sellerRoute.post("/", (req, res) => {
-  const { name, catagory, price, description, availability } = req.body;
-
-  // Validation check
-  if (!name || !catagory || !price) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
-
-  // ✅ Insert query (simple clean version)
-  const sql = `INSERT INTO products (name, catagory, price, description, availability) VALUES (?, ?, ?, ?, ?)`;
-
-  db.query(
-    sql,
-    [name, catagory, price, description || "", availability || 1],
-    (err, result) => {
-      if (err) {
-        console.error("❌ Insert Error:", err);
-        return res
-          .status(500)
-          .json({ message: "Failed to add product", error: err.message });
-      }
-      res.json({
-        message: "✅ Product added successfully",
-        productId: result.insertId,
-      });
+sellerRoute.post("/", async (req, res) => {
+  try {
+    const { name, catagory, price, description, availability } = req.body;
+    if (!name || !catagory || !price) {
+      return res.status(400).json({ message: "Missing required fields" });
     }
-  );
+
+    const product = await Product.create({
+      name,
+      catagory,
+      price,
+      description: description || "",
+      availability: availability ?? true,
+    });
+
+    res.json({ message: "✅ Product added successfully", product });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to add product", error: err.message });
+  }
 });
 
 // ✅ Read (Get all products)
-sellerRoute.get("/", (req, res) => {
-  const sql = "SELECT * FROM products";
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error("❌ Fetch Error:", err);
-      return res
-        .status(500)
-        .json({ message: "Failed to fetch products", error: err.message });
-    }
-    res.json(results);
-  });
+sellerRoute.get("/", async (req, res) => {
+  try {
+    const products = await Product.findAll();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch products", error: err.message });
+  }
 });
 
-// ✅ Update (Full update)
-sellerRoute.put("/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, catagory, price, description, availability } = req.body;
+// ✅ Update 
+sellerRoute.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, catagory, price, description, availability } = req.body;
+    const product = await Product.findByPk(id);
 
-  if (!id) {
-    return res.status(400).json({ message: "Product ID is required" });
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    await product.update({ name, catagory, price, description, availability });
+    res.json({ message: "✅ Product updated successfully", product });
+  } catch (err) {
+    res.status(500).json({ message: "Update failed", error: err.message });
   }
-
-  const sql = `
-    UPDATE products
-    SET name = ?, catagory = ?, price = ?, description = ?, availability = ?
-    WHERE id = ?
-  `;
-
-  db.query(
-    sql,
-    [name, catagory, price, description, availability, id],
-    (err, result) => {
-      if (err) {
-        console.error("❌ Update Error:", err);
-        return res
-          .status(500)
-          .json({ message: "Failed to update product", error: err.message });
-      }
-      res.json({ message: "✅ Product updated successfully" });
-    }
-  );
 });
 
-// ✅ Patch (Partial update: change price or availability)
-sellerRoute.patch("/:id", (req, res) => {
-  const { id } = req.params;
-  const { price, availability } = req.body;
+// ✅ Patch (Partial update)
+sellerRoute.patch("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { price, availability } = req.body;
+    const product = await Product.findByPk(id);
 
-  if (!id) {
-    return res.status(400).json({ message: "Product ID is required" });
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    await product.update({
+      ...(price !== undefined && { price }),
+      ...(availability !== undefined && { availability }),
+    });
+
+    res.json({ message: "✅ Product updated partially", product });
+  } catch (err) {
+    res.status(500).json({ message: "Patch failed", error: err.message });
   }
-
-  const updates = [];
-  const values = [];
-
-  if (price !== undefined) {
-    updates.push("price = ?");
-    values.push(price);
-  }
-  if (availability !== undefined) {
-    updates.push("availability = ?");
-    values.push(availability);
-  }
-
-  if (updates.length === 0) {
-    return res.status(400).json({ message: "No fields to update" });
-  }
-
-  const sql = `UPDATE products SET ${updates.join(", ")} WHERE id = ?`;
-  values.push(id);
-
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      console.error("❌ Patch Error:", err);
-      return res
-        .status(500)
-        .json({ message: "Failed to update product partially", error: err.message });
-    }
-    res.json({ message: "✅ Product updated partially" });
-  });
 });
 
-// ✅ Delete product
-sellerRoute.delete("/:id", (req, res) => {
-  const { id } = req.params;
+// ✅ Delete
+sellerRoute.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Product.destroy({ where: { id } });
 
-  if (!id) {
-    return res.status(400).json({ message: "Product ID is required" });
-  }
+    if (!deleted) return res.status(404).json({ message: "Product not found" });
 
-  const sql = "DELETE FROM products WHERE id = ?";
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      console.error("❌ Delete Error:", err);
-      return res
-        .status(500)
-        .json({ message: "Failed to delete product", error: err.message });
-    }
     res.json({ message: "✅ Product deleted successfully" });
-  });
+  } catch (err) {
+    res.status(500).json({ message: "Delete failed", error: err.message });
+  }
 });
