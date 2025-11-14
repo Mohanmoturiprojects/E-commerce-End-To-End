@@ -1,85 +1,163 @@
-/* ========== General Layout ========== */
+/* ========== GENERAL LAYOUT ========== */
 .home-container {
   width: 95vw;
   max-width: none;
-  background-color: #fafafa;
+  min-height: 100vh;
+  background-color: #f7f8fa;
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
+  padding-bottom: 50px;
 }
 
-
-/* ===== Top Carousel Section ===== */
-.carousel-section {
-  width: 100vw;
-  overflow: hidden;
+/* ===== SUCCESS BANNER ===== */
+.success-banner {
+  background-color: #22c55e;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
   text-align: center;
-  background-color: #0ebea9;
+  margin: 20px auto;
+  font-weight: 500;
+  width: 90%;
+  max-width: 900px;
+  animation: fadeInOut 3s ease-in-out forwards;
 }
 
-
-.carousel-title {
-  font-size: 1.8rem;
-  color: #fff;
-  padding: 10px 0;
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
 }
 
-
-.carousel-wrapper {
-  width: 100vw;
-  height: 45vh;
-  overflow: hidden;
-}
-
-
-.carousel-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-
-/* ===== Products Section ===== */
+/* ===== PRODUCTS SECTION ===== */
 .products-section {
-  width: 100vw;
-  padding: 30px 10px;             /* Less horizontal padding allows full width usage */
+  width: 95%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 40px 0;
   text-align: center;
   box-sizing: border-box;
 }
-
 
 .section-title {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #1e293b;
+  font-weight: 600;
+  margin-bottom: 30px;
+  letter-spacing: 0.4px;
 }
 
+/* ===== PRODUCT GRID ===== */
 .products-grid {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Exactly 5 cards per row */
-  gap: 25px;
-  box-sizing: border-box;
+  grid-template-columns: repeat(4, 1fr); /* ✅ exactly 4 per row */
+  gap: 30px;
   justify-items: center;
 }
 
-.no-products {
-  font-size: 1rem;
-  color: #666;
+/* ===== PRODUCT CARD ===== */
+.product-card {
+  width: 95vw;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .carousel-wrapper {
-    height: 30vh;
-  }
+.product-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
 
-  .products-section {
-    padding: 20px 4px;
-  }
+/* ===== PRODUCT DETAILS ===== */
+.product-info {
+  padding: 15px 16px;
+  text-align: left;
+}
 
+.product-info h3 {
+  font-size: 1rem;
+  color: #111827;
+  font-weight: 600;
+  margin-bottom: 5px;
+  line-height: 1.3;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-info p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 2px 0;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  color: #0ea5e9;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* ===== LOADING & END TEXT ===== */
+.loading-text {
+  text-align: center;
+  color: #6b7280;
+  font-size: 16px;
+  margin: 25px 0;
+}
+
+.no-more-text {
+  text-align: center;
+  color: #2563eb;
+  font-size: 17px;
+  font-weight: 500;
+  margin: 30px 0;
+}
+
+/* ===== SCROLL SENTINEL ===== */
+.scroll-trigger {
+  height: 20px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
   .products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .product-card img {
+    height: 180px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
   }
 }

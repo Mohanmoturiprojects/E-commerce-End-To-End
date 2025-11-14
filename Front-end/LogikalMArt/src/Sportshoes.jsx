@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Sportshoes.css";
@@ -39,12 +39,12 @@ const Sportshoes = () => {
 
           let imagePath = "/Images/default.jpg";
           if (lower.includes("running")) imagePath = "/Shoes/running.jpg";
-          else if (lower.includes("puma running")) imagePath = "/Shoes/puma running.jpg";
+          else if (lower.includes("hotstyle")) imagePath = "/Shoes/hotstyle.jpg";
           else if (lower.includes("casuals")) imagePath = "/Shoes/casuals.jpg";
           else if (lower.includes("training")) imagePath = "/Shoes/training.jpg";
           else if (lower.includes("walking")) imagePath = "/Shoes/walking.jpg";
-          else if (lower.includes("adidas")) imagePath = "/Shoes/adidas.jpg";
-          else if (lower.includes("reebok")) imagePath = "/Shoes/reebok.jpg";
+          else if (lower.includes("aadi")) imagePath = "/Shoes/aadi.jpg";
+          else if (lower.includes("new Oranie")) imagePath = "/Shoes/new Oranie.jpg";
 
           return {
             id: item.id,
@@ -164,7 +164,7 @@ const Sportshoes = () => {
         </div>
 
         <div className="filter-group">
-          <label>Brand</label>
+          <label>Name</label>
           <select name="brand" value={filters.brand} onChange={handleFilterChange}>
             <option value="">All</option>
             {uniqueBrands.map((b) => (

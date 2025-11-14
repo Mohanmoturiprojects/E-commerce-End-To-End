@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Formalshoes.css";
@@ -158,7 +158,7 @@ const Formalshoes = () => {
         </div>
 
         <div className="filter-group">
-          <label>Brand</label>
+          <label>Name</label>
           <select name="brand" onChange={handleFilterChange}>
             <option value="">All</option>
             <option value="Bata">Bata</option>

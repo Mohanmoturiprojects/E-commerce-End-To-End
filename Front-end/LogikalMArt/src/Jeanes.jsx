@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Jeanes.css";
@@ -15,7 +15,7 @@ const Jeanes = () => {
   const [filters, setFilters] = useState({
     color: "",
     size: "",
-    brand: "",
+    name: "",
   });
 
   useEffect(() => {
@@ -31,15 +31,10 @@ const Jeanes = () => {
         const updatedJeans = jeanData.map((item) => {
           let imagePath = "/Images/default-jeans.jpg";
 
-           if (item.name.toLowerCase().includes("denim"))
-            imagePath = "/Mens/denim.webp";
-          else if (item.name.toLowerCase().includes("bootcut"))
-            imagePath = "/Mens/bootcut.webp";
-          else if (item.name.toLowerCase().includes("crop fit"))
-            imagePath = "/Mens/crop fit.webp";
-           else if (item.name.toLowerCase().includes("torn"))
-            imagePath = "/Mens/torn.webp";
-
+           if (item.name.toLowerCase().includes("denim"))  imagePath = "/Mens/denim.webp";
+          else if (item.name.toLowerCase().includes("bootcut"))  imagePath = "/Mens/bootcut.webp";
+          else if (item.name.toLowerCase().includes("crop fit"))  imagePath = "/Mens/crop fit.webp";
+           else if (item.name.toLowerCase().includes("torn")) imagePath = "/Mens/torn.webp";
           return { ...item, image: imagePath };
         });
 
@@ -73,9 +68,9 @@ const Jeanes = () => {
       );
     }
 
-    if (filters.brand) {
+    if (filters.name) {
       filtered = filtered.filter((j) =>
-        j.name.toLowerCase().includes(filters.brand.toLowerCase())
+        j.name.toLowerCase().includes(filters.name.toLowerCase())
       );
     }
 
@@ -159,16 +154,16 @@ const Jeanes = () => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <label>Brand</label>
-          <select name="brand" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="Levis">Levis</option>
-            <option value="Pepe">Pepe</option>
-            <option value="Denim">Denim</option>
-            <option value="Zara">Zara</option>
-          </select>
-        </div>
+      <div className="filter-group">
+  <label>Name</label>
+  <select name="name" onChange={handleFilterChange}>
+    <option value="">All</option>
+    <option value="denim">Denim</option>
+    <option value="bootcut">Bootcut</option>
+    <option value="crop fit">Crop Fit</option>
+    <option value="torn">Torn</option>
+  </select>
+</div>
       </aside>
 
       {/* Main content */}

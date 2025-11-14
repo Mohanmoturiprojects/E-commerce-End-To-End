@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Bedroom.css";
 
 const Bedroom = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart);
   const [bedroom, setBedroom] = useState([]);
   const [filteredBedroom, setFilteredBedroom] = useState([]);
@@ -18,7 +20,7 @@ const Bedroom = () => {
     material: "",
   });
 
-  // ✅ Fetch bedroom data
+  // ✅ Fetch bedroom products
   useEffect(() => {
     axios
       .get("http://localhost:8081/api/products")
@@ -35,8 +37,10 @@ const Bedroom = () => {
           else if (name.includes("pillows")) imagePath = "/Home/pillows.jpg";
           else if (name.includes("blanket")) imagePath = "/Home/blanket.jpg";
           else if (name.includes("curtains")) imagePath = "/Home/curtains.jpg";
-          else if (name.includes("ddecor")) imagePath = "/Images/ddecor curtain.webp";
-          else if (name.includes("bombay dyeing")) imagePath = "/Images/bombay bedsheet.webp";
+          else if (name.includes("ddecor"))
+            imagePath = "/Images/ddecor curtain.webp";
+          else if (name.includes("bombay dyeing"))
+            imagePath = "/Images/bombay bedsheet.webp";
 
           return { ...item, image: imagePath };
         });
@@ -55,7 +59,7 @@ const Bedroom = () => {
     setFilters({ ...filters, [name]: value });
   };
 
-  // ✅ Apply filters dynamically
+  // ✅ Apply filters
   useEffect(() => {
     let filtered = bedroom;
 
@@ -64,12 +68,11 @@ const Bedroom = () => {
         b.name.toLowerCase().includes(filters.brand.toLowerCase())
       );
     }
-
-    if (filters.type) {
-      filtered = filtered.filter(
-        (b) => b.type && b.type.toLowerCase() === filters.type.toLowerCase()
-      );
-    }
+if (filters.type) {
+  filtered = filtered.filter((b) =>
+    b.name.toLowerCase().includes(filters.type.toLowerCase())
+  );
+}
 
     if (filters.material) {
       filtered = filtered.filter(
@@ -89,6 +92,14 @@ const Bedroom = () => {
 
   // ✅ Increment
   const handleIncrement = (item) => {
+    if (item.availability <= 0) {
+      toast.error(`${item.name} is out of stock!`, {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
+      return;
+    }
+
     setBedroom((prev) =>
       prev.map((b) => {
         if (b.id === item.id && b.availability > 0) {
@@ -97,14 +108,6 @@ const Bedroom = () => {
         return b;
       })
     );
-
-    if (item.availability <= 0) {
-      toast.error(`${item.name} is out of stock!`, {
-        position: "bottom-right",
-        autoClose: 2000,
-      });
-      return;
-    }
 
     const quantity = getQuantity(item);
     if (quantity === 0) {
@@ -135,6 +138,11 @@ const Bedroom = () => {
     }
   };
 
+  // ✅ Navigate to product details
+  const handleProductClick = (id) => {
+    navigate(`/product/${id}`);
+  };
+
   return (
     <div className="bedroom-main">
       {/* Sidebar */}
@@ -155,14 +163,14 @@ const Bedroom = () => {
         </div>
 
         <div className="filter-group">
-          <label>Type</label>
+          <label>Name</label>
           <select name="type" onChange={handleFilterChange}>
             <option value="">All</option>
-            <option value="Bedsheet">Bedsheet</option>
-            <option value="Pillow">Pillow</option>
-            <option value="Curtain">Curtain</option>
+            <option value="bed sheet">Bedsheet</option>
+            <option value="pillows">Pillows</option>
+            <option value="blanket">Blanket</option>
             <option value="Mattress">Mattress</option>
-            <option value="Blanket">Blanket</option>
+            <option value="curtains">Curtains</option>
           </select>
         </div>
 
@@ -179,14 +187,24 @@ const Bedroom = () => {
         </div>
       </aside>
 
-      {/* Main content */}
+      {/* Main Content */}
       <div className="bedroom-container">
         <h2 className="bedroom-title">🛏️ Bedroom Essentials</h2>
+
         <div className="bedroom-grid">
           {filteredBedroom.map((item) => (
-            <div key={item.id} className="bedroom-card">
+            <div
+              key={item.id}
+              className="bedroom-card"
+              onClick={() => handleProductClick(item.id)}
+              style={{ cursor: "pointer" }}
+            >
               <div className="bedroom-image-wrapper">
-                <img src={item.image} alt={item.name} className="bedroom-image" />
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="bedroom-image"
+                />
               </div>
 
               <div className="bedroom-details">
@@ -199,10 +217,14 @@ const Bedroom = () => {
                   <p className="bedroom-stock out">🔴 Out of Stock</p>
                 )}
 
-                <div className="quantity-controller">
+                <div
+                  className="quantity-controller"
+                  onClick={(e) => e.stopPropagation()} // prevent navigation when clicking buttons
+                >
                   <button
                     className="quantity-btn"
                     onClick={() => handleDecrement(item)}
+                    disabled={getQuantity(item) === 0}
                   >
                     -
                   </button>

@@ -15,7 +15,7 @@ const Sarees = () => {
   const [filters, setFilters] = useState({
     color: "",
     fabric: "",
-    brand: "",
+    name: "",
   });
 
   // ✅ Fetch products from backend
@@ -31,23 +31,14 @@ const Sarees = () => {
         const updatedSarees = sareeData.map((item) => {
           let imagePath = "/Images/default-saree.jpg";
 
-          if (item.name.toLowerCase().includes("kalamandir"))
-            imagePath = "/Womens/kalamandir.webp";
-          else if (item.name.toLowerCase().includes("meesho"))
-            imagePath = "/Womens/meesho.webp";
-          else if (item.name.toLowerCase().includes("febindia"))
-            imagePath = "/Womens/febindia.jpeg";
-          else if (item.name.toLowerCase().includes("manyavar"))
-            imagePath = "/Womens/manyavar.webp";
-          else if (item.name.toLowerCase().includes("lehenga"))
-            imagePath = "/Womens/lehenga.jpg";
-          else if (item.name.toLowerCase().includes("myntra"))
-            imagePath = "/Womens/myntra.webp";
-          else if (item.name.toLowerCase().includes("dori"))
-            imagePath = "/Womens/dori.jpg";
-          else if (item.name.toLowerCase().includes("turkish"))
-            imagePath = "/Womens/turkish.jpg";
-
+          if (item.name.toLowerCase().includes("kivera")) imagePath = "/Womens/kivera.webp";
+          else if (item.name.toLowerCase().includes("starly"))  imagePath = "/Womens/starly.webp";
+          else if (item.name.toLowerCase().includes("banarasi")) imagePath = "/Womens/banarasi.jpeg";
+          else if (item.name.toLowerCase().includes("chanderi"))  imagePath = "/Womens/chanderi.webp";
+          else if (item.name.toLowerCase().includes("lehenga")) imagePath = "/Womens/lehenga.jpg";
+          else if (item.name.toLowerCase().includes("myntra")) imagePath = "/Womens/myntra.webp";
+          else if (item.name.toLowerCase().includes("dori")) imagePath = "/Womens/dori.jpg";
+          else if (item.name.toLowerCase().includes("turkish")) imagePath = "/Womens/turkish.jpg";
           return { ...item, image: imagePath };
         });
 
@@ -81,9 +72,9 @@ const Sarees = () => {
       );
     }
 
-    if (filters.brand) {
+    if (filters.name) {
       filtered = filtered.filter((s) =>
-        s.name.toLowerCase().includes(filters.brand.toLowerCase())
+        s.name.toLowerCase().includes(filters.name.toLowerCase())
       );
     }
 
@@ -149,7 +140,19 @@ const Sarees = () => {
       {/* Sidebar */}
       <aside className="sidebar">
         <h3>Filters</h3>
-
+           
+           
+        <div className="filter-group">
+          <label>Name</label>
+          <select name="name" onChange={handleFilterChange}>
+            <option value="">All</option>
+            <option value="lehenga">Lehenga</option>
+            <option value="kivera">Kivera</option>
+            <option value="starly">Starly</option>
+            <option value="turkish">Turkish</option>
+          </select>
+        </div>
+        
         <div className="filter-group">
           <label>Color</label>
           <select name="color" onChange={handleFilterChange}>
@@ -172,16 +175,6 @@ const Sarees = () => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <label>Brand</label>
-          <select name="brand" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="Kalamandir">Kalamandir</option>
-            <option value="FabIndia">FabIndia</option>
-            <option value="Meesho">Meesho</option>
-            <option value="Manyavar">Manyavar</option>
-          </select>
-        </div>
       </aside>
 
       {/* Main content */}

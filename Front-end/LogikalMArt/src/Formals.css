@@ -59,7 +59,7 @@ body {
 }
 
 .filter-group select {
-  width: 100%;
+  width: 95vw;
   padding: 6px 8px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -96,7 +96,7 @@ body {
 
 /* 🧺 Product Card */
 .formal-card {
-  width: 100%;
+  width: 95vw;
   max-width: 250px;
   background-color: #fff;
   border-radius: 12px;

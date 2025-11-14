@@ -60,6 +60,12 @@ body, html { font-family: Poppins, sans-serif; background: #f5f5f5; }
   margin-top: 10px;
 }
 
+.dropdown.active-dropdown > .nav-link {
+  background-color: #47afbe98; /* light yellow */
+  border-radius: 5px;
+  color: #1114a3;
+  font-weight: bold;
+}
 
 
 
@@ -195,12 +201,16 @@ body, html { font-family: Poppins, sans-serif; background: #f5f5f5; }
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 10px;
+  padding: 10px 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 160px;
+  min-width: 180px;
   text-align: center;
   z-index: 10;
+  display: flex;
+  flex-direction: column; /* stack items vertically */
+  gap: 10px; /* space between username, profile, and logout */
 }
+
 
 .user-email {
   color: #333;

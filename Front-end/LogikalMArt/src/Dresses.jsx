@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Dresses.css";
@@ -31,15 +31,10 @@ const Dresses = () => {
         const updatedDresses = dressData.map((item) => {
           let imagePath = "/Images/default-dress.jpg";
 
-          if (item.name.toLowerCase().includes("max"))
-            imagePath = "/Womens/max.jpg";
-          else if (item.name.toLowerCase().includes("aask"))
-            imagePath = "/Womens/aask.jpg";
-          else if (item.name.toLowerCase().includes("h & m"))
-            imagePath = "/Womens/h & m.jpg";
-          else if (item.name.toLowerCase().includes("zara"))
-            imagePath = "/Womens/zara.jpg";
-
+          if (item.name.toLowerCase().includes("max")) imagePath = "/Womens/max.jpg";
+          else if (item.name.toLowerCase().includes("aask")) imagePath = "/Womens/aask.jpg";
+          else if (item.name.toLowerCase().includes("h & m"))  imagePath = "/Womens/h & m.jpg";
+          else if (item.name.toLowerCase().includes("zara")) imagePath = "/Womens/zara.jpg";
           return { ...item, image: imagePath };
         });
 
@@ -141,7 +136,19 @@ const Dresses = () => {
       {/* Sidebar Filters */}
       <aside className="sidebar">
         <h3>Filters</h3>
-
+         
+         
+        <div className="filter-group">
+          <label>Name</label>
+          <select name="brand" onChange={handleFilterChange}>
+            <option value="">All</option>
+            <option value="zara">Zara</option>
+            <option value="H&M">H&M</option>
+            <option value="max">MAx</option>
+            <option value="aask">Aask</option>
+          </select>
+        </div>
+        
         <div className="filter-group">
           <label>Color</label>
           <select name="color" onChange={handleFilterChange}>
@@ -164,16 +171,6 @@ const Dresses = () => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <label>Brand</label>
-          <select name="brand" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="Zara">Zara</option>
-            <option value="H&M">H&M</option>
-            <option value="Vero Moda">MAx</option>
-            <option value="FabIndia">Aask</option>
-          </select>
-        </div>
       </aside>
 
       {/* Main Products Section */}

@@ -12,10 +12,10 @@ const ProductCard = ({ product }) => {
 
   // 🛒 Add to cart functionality
   const handleAddToCart = (e) => {
-    e.stopPropagation(); // Prevent navigation to product details
+    e.stopPropagation(); // Prevent navigating to product details
 
-    if (product.availability !== "In Stock") {
-      toast.error("Product out of stock ❌", { position: "bottom-right" });
+    if (!product.availability) {
+      toast.error("❌ Product out of stock", { position: "bottom-right" });
       return;
     }
 
@@ -24,9 +24,8 @@ const ProductCard = ({ product }) => {
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.image,
       description: product.description,
-      category: product.category,
+      category: product.catagory, 
       quantity: 1,
       availability: product.availability,
     };
@@ -48,10 +47,9 @@ const ProductCard = ({ product }) => {
   return (
     <div className="product-card" onClick={handleCardClick}>
       <img
-        src={product.image}
+        src={ "/images/default.jpg"}
         alt={product.name}
         className="product-img"
-        onError={(e) => (e.target.src = "/images/default.jpg")}
       />
 
       <h3 className="product-name">{product.name}</h3>
@@ -59,17 +57,17 @@ const ProductCard = ({ product }) => {
 
       <p
         className={`availability ${
-          product.availability === "In Stock" ? "in-stock" : "out-stock"
+          product.availability ? "in-stock" : "out-stock"
         }`}
       >
-        {product.availability}
+        {product.availability ? "In Stock" : "Out of Stock"}
       </p>
 
       {/* 🛒 Add to Cart Button */}
       <button
         className="add-btn"
         onClick={handleAddToCart}
-        disabled={product.availability !== "In Stock"}
+        disabled={!product.availability}
       >
         Add to Cart
       </button>

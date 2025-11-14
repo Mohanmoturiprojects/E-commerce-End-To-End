@@ -4,11 +4,13 @@ import "./Register.css";
 
 function Register() {
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     username: "",
     password: "",
     mobile: "",
     address: "",
-    gender:"",
+    gender: "",
   });
 
   const handleChange = (e) => {
@@ -32,6 +34,20 @@ function Register() {
         <h2 className="register-title">Create Your Account</h2>
         <form onSubmit={handleSubmit} className="register-form">
           <input
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+          <input
             name="username"
             placeholder="Username"
             value={formData.username}
@@ -52,7 +68,7 @@ function Register() {
             value={formData.mobile}
             onChange={handleChange}
           />
-             <input
+          <input
             name="gender"
             placeholder="Gender"
             value={formData.gender}

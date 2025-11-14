@@ -1,4 +1,6 @@
 .toys-main {
+  width: 95vw;
+  max-width: none;
   display: flex;
   min-height: 100vh;
   background-color: #f9f9f9;

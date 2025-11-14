@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { SetOrders } from "./store";
 import "./Orders.css";
 
 function Orders() {
-  const dispatch = useDispatch();
-  const orders = useSelector((state) => state.orders);
-  const [expandedOrder, setExpandedOrder] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Get logged-in username safely from localStorage (JSON user object)
+  // ✅ Get logged-in user
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const username = storedUser?.username || storedUser?.email || null;
 
@@ -20,36 +16,15 @@ function Orders() {
       return;
     }
 
-    // ✅ Fetch orders for the specific logged-in user
     const fetchOrders = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:8081/api/orders/user/${username}`
-        );
+        const res = await fetch(`http://localhost:8081/api/orders/user/${username}`);
         const data = await res.json();
 
         if (data.success) {
-          // Group results by order_id so each order can have multiple items
-          const groupedOrders = data.orders.reduce((acc, item) => {
-            const order = acc.find((o) => o.id === item.order_id);
-            if (order) {
-              order.items.push(item);
-            } else {
-              acc.push({
-                id: item.order_id,
-                date: item.created_at,
-                totalAmount: item.total_price,
-                status: item.status,
-                deliveredAt: item.delivered_at, // ✅ include delivery date
-                items: [item],
-              });
-            }
-            return acc;
-          }, []);
-
-          dispatch(SetOrders(groupedOrders));
+          setOrders(data.orders);
         } else {
-          dispatch(SetOrders([]));
+          setOrders([]);
         }
       } catch (error) {
         console.error("❌ Error fetching orders:", error);
@@ -59,11 +34,7 @@ function Orders() {
     };
 
     fetchOrders();
-  }, [username, dispatch]);
-
-  const toggleExpand = (index) => {
-    setExpandedOrder((prev) => (prev === index ? null : index));
-  };
+  }, [username]);
 
   if (loading) {
     return <p className="loading">Loading your orders...</p>;
@@ -71,68 +42,48 @@ function Orders() {
 
   return (
     <div className="orders-container">
-      <h2 className="orders-title">📜 My Orders</h2>
+      <h2 className="orders-title">📦 My Orders</h2>
 
       {orders.length === 0 ? (
-        <p className="empty-message">You haven't placed any orders yet.</p>
+        <p className="empty-message">You haven’t placed any orders yet.</p>
       ) : (
-        <div className="order-cards">
-          {orders.map((order, index) => (
-            <div className="order-card" key={order.id || index}>
-              <div className="order-header" onClick={() => toggleExpand(index)}>
-                <div className="order-info">
-                  <h4>Order #{order.id}</h4>
-                  <span>{new Date(order.date).toLocaleString()}</span>
-                </div>
+        <>
+          <p className="order-count">Total Orders: {orders.length}</p>
 
-                {/* ✅ Order status badge */}
-                <span
-                  className={`status-badge ${
-                    order.status?.toLowerCase() || "pending"
-                  }`}
-                >
-                  {order.status || "Pending"}
-                </span>
+          <table className="orders-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Qty</th>
+                <th>Unit Price (₹)</th>
+                <th>Total (₹)</th>
+                <th>Status</th>
+                <th>Ordered On</th>
+              </tr>
+            </thead>
+<tbody>
+  {orders.map((order) => (
+    <tr key={order.id}>
+      <td>{order.id}</td>
+      <td>{order.product?.name || "N/A"}</td>
+      <td>{order.product?.catagory || "N/A"}</td>
+      <td>{order.quantity}</td>
+      <td>{order.product?.price || "N/A"}</td>
+      <td>{order.total_price}</td>
+      <td>
+        <span className={`status-badge ${order.status?.toLowerCase()}`}>
+          {order.status}
+        </span>
+      </td>
+      <td>{new Date(order.created_at).toLocaleString()}</td>
+    </tr>
+  ))}
+</tbody>
 
-                <button className="expand-btn">
-                  {expandedOrder === index ? "▲ Hide" : "▼ Show"}
-                </button>
-              </div>
-
-              {expandedOrder === index && (
-                <div className="order-body">
-                  {order.items.map((item, i) => (
-                    <div className="order-item" key={i}>
-                      <div className="item-info">
-                        <p>
-                          <strong>{item.product_name}</strong>
-                        </p>
-                        <p>Category: {item.catagory}</p>
-                        <p>Price: ₹{item.product_price}</p>
-                        <p>Quantity: {item.quantity}</p>
-                        <p>Total: ₹{item.total_price}</p>
-                      </div>
-                    </div>
-                  ))}
-
-                  {/* ✅ Show Delivered At info */}
-                  {order.deliveredAt && (
-                    <p className="delivered-date">
-                      📦 Delivered On:{" "}
-                      <strong>
-                        {new Date(order.deliveredAt).toLocaleString()}
-                      </strong>
-                    </p>
-                  )}
-
-                  <div className="order-footer">
-                    <h4>Total Paid: ₹{order.totalAmount}</h4>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+          </table>
+        </>
       )}
     </div>
   );

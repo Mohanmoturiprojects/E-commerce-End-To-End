@@ -16,16 +16,13 @@ const Managerdashboard = () => {
   const [editId, setEditId] = useState(null);
   const navigate = useNavigate();
 
-  // ✅ Fetch data whenever the view changes
   useEffect(() => {
     fetchData(view);
   }, [view]);
 
-  // ✅ Fetch from backend dynamically
   const fetchData = async (type) => {
     let endpoint = "";
     if (type === "products") endpoint = "/api/manager/products";
-    else if (type === "sellers") endpoint = "/api/manager/sellers";
     else if (type === "users") endpoint = "/api/manager/users";
     else if (type === "orders") endpoint = "/api/manager/orders";
 
@@ -38,12 +35,10 @@ const Managerdashboard = () => {
     }
   };
 
-  // ✅ Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ Add new product
   const handleAdd = async () => {
     try {
       await axios.post("http://localhost:8081/api/manager/products", formData);
@@ -56,7 +51,6 @@ const Managerdashboard = () => {
     }
   };
 
-  // ✅ Edit product
   const handleEdit = (id) => {
     const item = data.find((d) => d.id === id);
     if (item) {
@@ -65,7 +59,6 @@ const Managerdashboard = () => {
     }
   };
 
-  // ✅ Update product
   const handleUpdate = async () => {
     try {
       await axios.put(
@@ -81,7 +74,6 @@ const Managerdashboard = () => {
     }
   };
 
-  // ✅ Delete product
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
@@ -94,12 +86,10 @@ const Managerdashboard = () => {
     }
   };
 
-  // ✅ Navigate to Registration Page
   const handleAddUser = () => {
     navigate("/register");
   };
 
-  // ✅ Remove User
   const handleRemoveUser = async (id) => {
     if (!window.confirm("Remove this user?")) return;
     try {
@@ -112,7 +102,26 @@ const Managerdashboard = () => {
     }
   };
 
-  // ✅ Update Order Status + delivery date
+  // ✅ FIXED: Update Role logic
+  const handleUpdateRole = async (userId) => {
+    const newRole = prompt("Enter new role ");
+    if (!newRole) return;
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8081/api/manager/users/${userId}/role`,
+        { newRole }
+      );
+
+      console.log("✅ Role Update Response:", response.data);
+      alert("✅ Role updated successfully!");
+      fetchData("users");
+    } catch (err) {
+      console.error("❌ Error updating role:", err);
+      alert("❌ Error updating role");
+    }
+  };
+
   const handleUpdateOrder = async (id) => {
     const newStatus = prompt("Enter new status (Pending, Shipped, Delivered):");
     if (!newStatus) return;
@@ -122,10 +131,9 @@ const Managerdashboard = () => {
         status: newStatus,
         delivered_at:
           newStatus.toLowerCase() === "delivered"
-            ? new Date().toISOString() 
+            ? new Date().toISOString()
             : null,
       });
-
       alert("✅ Order status updated!");
       fetchData("orders");
     } catch (err) {
@@ -134,7 +142,6 @@ const Managerdashboard = () => {
     }
   };
 
-  // ✅ Reset form
   const resetForm = () => {
     setFormData({
       name: "",
@@ -150,7 +157,6 @@ const Managerdashboard = () => {
     <div className="manager-container">
       <h2>🧑‍💼 Manager Dashboard</h2>
 
-      {/* Dropdown for view selection */}
       <select
         className="dropdown"
         value={view}
@@ -159,10 +165,8 @@ const Managerdashboard = () => {
         <option value="products">Products</option>
         <option value="orders">Orders</option>
         <option value="users">Users</option>
-        <option value="sellers">Sellers</option>
       </select>
 
-      {/* ✅ Add/Edit Form for Products */}
       {view === "products" && (
         <div className="product-form">
           <input
@@ -213,7 +217,6 @@ const Managerdashboard = () => {
         </div>
       )}
 
-      {/* ✅ User Controls */}
       {view === "users" && (
         <div className="user-controls">
           <button className="add-btn" onClick={handleAddUser}>
@@ -222,7 +225,6 @@ const Managerdashboard = () => {
         </div>
       )}
 
-      {/* ✅ Data Table */}
       <div className="manager-table">
         {data.length > 0 ? (
           <table>
@@ -247,7 +249,6 @@ const Managerdashboard = () => {
                     </td>
                   ))}
 
-                  {/* ✅ Product Actions */}
                   {view === "products" && (
                     <td>
                       <button
@@ -265,7 +266,6 @@ const Managerdashboard = () => {
                     </td>
                   )}
 
-                  {/* ✅ Order Actions */}
                   {view === "orders" && (
                     <td>
                       <button
@@ -277,9 +277,14 @@ const Managerdashboard = () => {
                     </td>
                   )}
 
-                  {/* ✅ User Actions */}
                   {view === "users" && (
                     <td>
+                      <button
+                        className="update-btn"
+                        onClick={() => handleUpdateRole(item.id)}
+                      >
+                        🧩 Update Role
+                      </button>
                       <button
                         className="delete-btn"
                         onClick={() => handleRemoveUser(item.id)}

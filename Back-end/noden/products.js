@@ -36,6 +36,47 @@ productsRoute.get("/", async (req, res) => {
   }
 });
 
+      productsRoute.get("/paginated", async (req, res) => {
+            try {
+                 const search = req.query.q || "";
+                 const page = Number(req.query.page) || 1;
+                 const limit = Number(req.query.limit) || 10;
+                 const offset = (page - 1) * limit;
+
+                  const condition = search
+            ? {
+                 [Op.or]: [
+                  { name: { [Op.like]: `%${search}%` } },
+                  { catagory: { [Op.like]: `%${search}%` } },
+                  { description: { [Op.like]: `%${search}%` } },
+              ],
+              }
+          : {};
+
+    const products = await Product.findAll({
+      where: condition,
+      limit,
+      offset,
+      order: [["id", "DESC"]],
+    });
+
+    const total = await Product.count({ where: condition });
+
+    res.json({
+      products,
+      total,
+      page,
+      limit,
+    });
+  } catch (error) {
+    console.error("❌ Error fetching paginated products:", error);
+    res.status(500).json({
+      message: "Error fetching products",
+      error: error.message,
+    });
+  }
+});
+
 
 // ✅ GET product by ID (includes JSON options)
 productsRoute.get("/:id", async (req, res) => {

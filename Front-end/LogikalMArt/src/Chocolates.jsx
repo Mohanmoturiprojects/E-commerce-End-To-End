@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Chocolates.css";
@@ -30,20 +30,13 @@ const Chocolates = () => {
         const updatedChocolates = chocolateData.map((item) => {
           let imagePath = "/Images/default-choco.jpg";
 
-          if (item.name.toLowerCase().includes("joys"))
-            imagePath = "/Kids/joys.webp";
-          else if (item.name.toLowerCase().includes("milkey"))
-            imagePath = "/Kids/milkey.webp";
-          else if (item.name.toLowerCase().includes("snickers"))
-            imagePath = "/Kids/snickers.webp";
-          else if (item.name.toLowerCase().includes("bang"))
-            imagePath = "/Kids/bang.webp";
-          else if (item.name.toLowerCase().includes("Cookeis"))
-            imagePath = "/Kids/Cookeis.webp";
-         else if (item.name.toLowerCase().includes("choco"))
-            imagePath = "/Kids/choco.webp";
-         else if (item.name.toLowerCase().includes("kinder"))
-            imagePath = "/Kids/kinder.webp";
+          if (item.name.toLowerCase().includes("joys")) imagePath = "/Kids/joys.webp";
+          else if (item.name.toLowerCase().includes("milkey")) imagePath = "/Kids/milkey.webp";
+          else if (item.name.toLowerCase().includes("snickers")) imagePath = "/Kids/snickers.webp";
+          else if (item.name.toLowerCase().includes("bang")) imagePath = "/Kids/bang.webp";
+          else if (item.name.toLowerCase().includes("Cookeis")) imagePath = "/Kids/Cookeis.webp";
+         else if (item.name.toLowerCase().includes("choco")) imagePath = "/Kids/choco.webp";
+         else if (item.name.toLowerCase().includes("kinder")) imagePath = "/Kids/kinder.webp";
 
           return { ...item, image: imagePath };
         });
@@ -121,6 +114,17 @@ const Chocolates = () => {
       <aside className="sidebar">
         <h3>Filters</h3>
 
+         <div className="filter-group">
+          <label>Name</label>
+          <select name="brand" onChange={handleFilterChange}>
+            <option value="">All</option>
+            <option value="joys">Joys</option>
+            <option value="milkey">Milkey</option>
+            <option value="snickers">Snickers</option>
+            <option value="bang">Bang</option>
+          </select>
+        </div>
+
         <div className="filter-group">
           <label>Flavor</label>
           <select name="flavor" onChange={handleFilterChange}>
@@ -132,16 +136,7 @@ const Chocolates = () => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <label>Brand</label>
-          <select name="brand" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="Cadbury">Cadbury</option>
-            <option value="Nestle">Nestle</option>
-            <option value="Amul">Amul</option>
-            <option value="Ferrero">Ferrero</option>
-          </select>
-        </div>
+       
 
         <div className="filter-group">
           <label>Type</label>

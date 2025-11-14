@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate, useLocation,} from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -39,8 +32,7 @@ import HomeFurniture from "./HomeFurniture";
 import Kitchens from "./Kitchens";
 import TableDinner from "./TableDinner";
 import Bedroom from "./Bedroom";
-import ProductCard from "./ProductCard";
-
+import ProductDetails from "./ProductDetails";
 import Login from "./Login";
 import Register from "./Register";
 import Cart from "./Cart";
@@ -48,9 +40,12 @@ import Orders from "./Orders";
 import Sellerdashboard from "./sellerdashboard";
 import Managerdashboard from "./Managerdashboard";
 import Deliverydashboard from "./Deliverydashboard";
-import ProductDetails from "./ProductDetails";
+import ForgotPassword from "./ForgotPassword";
+import ResetPassword from "./ResetPassword";
+import Profile from "./Profile";
+import SearchResults from "./SearchResults";
 
-/* Categories */
+
 const categories = [
   { name: "Home" },
   { name: "Electronics", sub: ["Mobiles", "Laptop", "SmartTV"] },
@@ -59,15 +54,13 @@ const categories = [
   { name: "Kids", sub: ["Clothings", "Chocolates", "Toys"] },
   { name: "Footwear", sub: ["Sportshoes", "FormalShoes", "Loafers"] },
   { name: "HomeFurniture", sub: ["Kitchens", "TableDinner", "Bedroom"] },
-  { name: "Orders" },
 ];
 
-/* Dropdown Component */
-const Dropdown = ({ title, items }) => {
+const Dropdown = ({ title, items, active }) => {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className="dropdown"
+      className={`dropdown ${active ? "active-dropdown" : ""}`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
@@ -94,77 +87,119 @@ const Dropdown = ({ title, items }) => {
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const dropdownRef = useRef(null);
 
   const [user, setUser] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
   const cartItems = useSelector((state) => state.cart);
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  // 🟢 Load user or role from localStorage
+  // ✅ Restore user session
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    const storedRole = localStorage.getItem("role");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
 
-    if (storedUser) setUser(JSON.parse(storedUser));
-    else if (storedRole) setUser(JSON.parse(storedRole));
-  }, []);
-
-  // 🟢 Load cart for user
-  useEffect(() => {
-    if (user && user.email) {
-      const emailKey = user.email.toLowerCase().replace(/[^a-z0-9]/g, "_");
-      const savedCart =
-        JSON.parse(localStorage.getItem(`cart_${emailKey}`)) || [];
-      dispatch(SetCart(savedCart));
+      const role = parsedUser.role?.toLowerCase();
+      if (
+        ["/", "/login", "/register", "/forgotPassword", "/reset-password"].includes(
+          window.location.pathname
+        )
+      ) {
+        if (role === "seller") navigate("/sellerdashboard");
+        else if (role === "manager") navigate("/managerdashboard");
+        else if (role === "delivery") navigate("/deliverydashboard");
+        else navigate("/home");
+      }
     } else {
-      const guestCart = JSON.parse(localStorage.getItem("cart_guest")) || [];
-      dispatch(SetCart(guestCart));
+      const publicRoutes = [
+        "/login",
+        "/register",
+        "/forgotPassword",
+        "/reset-password",
+        "/home",
+      ];
+      if (!publicRoutes.some((p) => window.location.pathname.startsWith(p))) {
+        navigate("/login");
+      }
     }
+  }, [navigate]);
+
+  // ✅ Load cart from localStorage
+  useEffect(() => {
+    const key = user?.username
+      ? user.username.toLowerCase().replace(/[^a-z0-9]/g, "_")
+      : "guest";
+    const saved = JSON.parse(localStorage.getItem(`cart_${key}`)) || [];
+    dispatch(SetCart(saved));
   }, [user, dispatch]);
 
-  // 🟢 Save cart when updated
+  // ✅ Save cart when updated
   useEffect(() => {
-    if (user && user.email) {
-      const emailKey = user.email.toLowerCase().replace(/[^a-z0-9]/g, "_");
-      localStorage.setItem(`cart_${emailKey}`, JSON.stringify(cartItems));
-    } else {
-      localStorage.setItem("cart_guest", JSON.stringify(cartItems));
-    }
+    const key = user?.username
+      ? user.username.toLowerCase().replace(/[^a-z0-9]/g, "_")
+      : "guest";
+    localStorage.setItem(`cart_${key}`, JSON.stringify(cartItems));
   }, [cartItems, user]);
 
-  // 🔍 Search handler
+  // ✅ Search handler
   const handleSearch = async () => {
-    if (!searchTerm.trim()) return setSearchResults([]);
+    if (!searchTerm.trim()) return;
     try {
       const res = await axios.get(
         `http://localhost:8081/api/products?q=${searchTerm}`
       );
-      setSearchResults(res.data);
-      navigate("/search");
+      navigate("/search", { state: { results: res.data } });
     } catch (err) {
-      console.error(err);
+      console.error("Error searching products:", err);
     }
   };
 
-  // 🚪 Logout
   const handleLogout = () => {
-    if (user?.email) {
-      const emailKey = user.email.toLowerCase().replace(/[^a-z0-9]/g, "_");
-      localStorage.setItem(`cart_${emailKey}`, JSON.stringify(cartItems));
+    if (user?.username) {
+      const key = user.username.toLowerCase().replace(/[^a-z0-9]/g, "_");
+      localStorage.setItem(`cart_${key}`, JSON.stringify(cartItems));
     }
     localStorage.removeItem("user");
-    localStorage.removeItem("role");
     setUser(null);
     dispatch(ClearCart());
+    setDropdownOpen(false);
     navigate("/login");
   };
 
+  // ✅ Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const activeCategory = categories.find((cat) => {
+    if (cat.sub) {
+      return cat.sub.some(
+        (sub) =>
+          location.pathname.toLowerCase() ===
+          `/${cat.name.toLowerCase()}/${sub.toLowerCase()}`
+      );
+    }
+    return location.pathname.toLowerCase() === `/${cat.name.toLowerCase()}`;
+  })?.name;
+
+  const isUserRole = !["seller", "manager", "delivery"].includes(
+    user?.role?.toLowerCase()
+  );
+
   return (
     <div className="page-container">
-      {/* ===== HEADER ===== */}
+      {/* HEADER */}
       <header className="header">
         <div className="header-top">
           <div className="logo">
@@ -195,19 +230,42 @@ const App = () => {
                 Login
               </Link>
             ) : (
-              <div className="user-avatar-wrapper">
+              <div className="user-avatar-wrapper" ref={dropdownRef}>
                 <div
                   className="user-avatar"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
-                  {user?.email
-                    ? user.email.charAt(0).toUpperCase()
+                  {user?.username
+                    ? user.username.charAt(0).toUpperCase()
                     : user?.role?.charAt(0) || "?"}
                 </div>
-
                 {dropdownOpen && (
                   <div className="user-dropdown">
-                    <p className="user-email">{user.email || user.role}</p>
+                    <p className="user-email">{user.username || user.role}</p>
+
+                    {isUserRole && (
+                      <>
+                        <button
+                          onClick={() => {
+                            setDropdownOpen(false);
+                            navigate("/profile");
+                          }}
+                          className="profile-btn"
+                        >
+                          View Profile
+                        </button>
+                        <button
+                          onClick={() => {
+                            setDropdownOpen(false);
+                            navigate("/orders");
+                          }}
+                          className="profile-btn"
+                        >
+                          Orders
+                        </button>
+                      </>
+                    )}
+
                     <button onClick={handleLogout} className="logout-btn">
                       Logout
                     </button>
@@ -218,58 +276,38 @@ const App = () => {
           </div>
         </div>
 
-       {!["SELLER", "DELIVERY"].includes(user?.role) && (
-  <div className="header-bottom">
-    {categories.map((cat) => (
-      <Dropdown key={cat.name} title={cat.name} items={cat.sub || []} />
-    ))}
-  </div>
-)}
+        {/* Navbar only for normal users */}
+        {isUserRole && (
+          <div className="header-bottom">
+            {categories.map((cat) => (
+              <Dropdown
+                key={cat.name}
+                title={cat.name}
+                items={cat.sub || []}
+                active={cat.name === activeCategory}
+              />
+            ))}
+          </div>
+        )}
       </header>
 
-      {/* ===== CONTENT ===== */}
+      {/* ROUTES */}
       <main className="content">
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/search" element={<SearchResults />} /> {/* ✅ Added */}
 
-          {/* 🔍 Search Results Page */}
-          <Route
-            path="/search"
-            element={
-              <div>
-                <h2>Search Results for "{searchTerm}"</h2>
-                <div className="products-grid">
-                  {searchResults.length > 0 ? (
-                    searchResults.map((product) => (
-                      <Link
-                        key={product.id}
-                        to={`/product/${product.id}`} // ✅ Click to view details
-                        style={{ textDecoration: "none", color: "inherit" }}
-                      >
-                        <ProductCard product={product} />
-                      </Link>
-                    ))
-                  ) : (
-                    <p>No products found.</p>
-                  )}
-                </div>
-              </div>
-            }
-          />
-
-          {/* ✅ Product Details Route */}
-          <Route path="/product/:id" element={<ProductDetails />} />
-
-          {/* 🔑 Auth Routes */}
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
-
-          {/* 🛒 Normal user routes */}
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
 
-          {/* 🧭 Category Routes */}
+          {/* Categories */}
           <Route path="/electronics" element={<Electronics />} />
           <Route path="/electronics/mobiles" element={<Mobiles />} />
           <Route path="/electronics/laptop" element={<Laptop />} />
@@ -295,11 +333,11 @@ const App = () => {
           <Route path="/homefurniture/tabledinner" element={<TableDinner />} />
           <Route path="/homefurniture/bedroom" element={<Bedroom />} />
 
-          {/* 🧑‍💼 Role-based routes */}
+          {/* Dashboards */}
           <Route
             path="/sellerdashboard"
             element={
-              user?.role === "SELLER" ? (
+              user?.role?.toLowerCase() === "seller" ? (
                 <Sellerdashboard />
               ) : (
                 <Navigate to="/login" />
@@ -309,7 +347,7 @@ const App = () => {
           <Route
             path="/managerdashboard"
             element={
-              user?.role === "MANAGER" ? (
+              user?.role?.toLowerCase() === "manager" ? (
                 <Managerdashboard />
               ) : (
                 <Navigate to="/login" />
@@ -319,7 +357,7 @@ const App = () => {
           <Route
             path="/deliverydashboard"
             element={
-              user?.role === "DELIVERY" ? (
+              user?.role?.toLowerCase() === "delivery" ? (
                 <Deliverydashboard />
               ) : (
                 <Navigate to="/login" />

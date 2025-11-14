@@ -3,6 +3,8 @@
   min-height: 100vh;
   background-color: #b6dcd84b;
   font-family: "Poppins", sans-serif;
+  width: 95vw;
+  max-width:none;
 }
 
 /* Sidebar */

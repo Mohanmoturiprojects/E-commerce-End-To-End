@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Mobiles.css"; // ✅ Reuse same styling
@@ -25,22 +25,13 @@ const Laptop = () => {
           let imagePath = "/Images/default.jpg";
 
           
-           if (item.name.toLowerCase().includes("dell"))
-            imagePath = "/Images/Dell 13.webp";
-          else if (item.name.toLowerCase().includes("hp"))
-            imagePath = "/Images/Hp 15.webp";
-          else if (item.name.toLowerCase().includes("MacBook Air M2"))
-            imagePath = "/Images/MacBook Air M2.jpg";
-          else if (item.name.toLowerCase().includes("acer"))
-            imagePath = "/Images/Acer.webp";
-           else if (item.name.toLowerCase().includes("asus"))
-            imagePath = "/Images/asus.webp";
-           else if (item.name.toLowerCase().includes("amd"))
-            imagePath = "/Images/amd.jpg";
-           else if (item.name.toLowerCase().includes("surfacae"))
-            imagePath = "/Images/surfacae.avif";
-
-
+           if (item.name.toLowerCase().includes("dell"))  imagePath = "/Images/Dell 13.webp";
+          else if (item.name.toLowerCase().includes("hp"))  imagePath = "/Images/Hp 15.webp";
+          else if (item.name.toLowerCase().includes("MacBook Air M2")) imagePath = "/Images/MacBook Air M2.jpg";
+          else if (item.name.toLowerCase().includes("acer"))  imagePath = "/Images/Acer.webp";
+           else if (item.name.toLowerCase().includes("asus")) imagePath = "/Images/asus.webp";
+           else if (item.name.toLowerCase().includes("amd"))  imagePath = "/Images/amd.jpg";
+           else if (item.name.toLowerCase().includes("surfacae")) imagePath = "/Images/surfacae.avif";
           return { ...item, image: imagePath };
         });
 

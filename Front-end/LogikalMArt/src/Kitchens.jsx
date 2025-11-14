@@ -31,30 +31,14 @@ const Kitchens = () => {
           const name = item.name.toLowerCase();
           let type = "Other";
 
-          if (name.includes("gas stove")) {
-            imagePath = "/Home/gas stove.jpg";
-            type = "Gas Stove";
-          } else if (name.includes("cooker")) {
-            imagePath = "/Home/cooker.jpg";
-            type = "Cooker";
-          } else if (name.includes("grinder")) {
-            imagePath = "/Home/grinder.jpg";
-            type = "Mixer";
-          } else if (name.includes("pan")) {
-            imagePath = "/Home/pan.jpg";
-            type = "Pan";
-          } else if (name.includes("refrigerator")) {
-            imagePath = "/Home/refrigerator.jpg";
-            type = "Refrigerator";
-          } else if (name.includes("oven")) {
-            imagePath = "/Home/oven.jpg";
-            type = "Oven";
-          } else if (name.includes("mixture") || name.includes("mixer")) {
-            imagePath = "/Home/mixture.jpg";
-            type = "Mixer";
-          } else if (name.includes("induction")) {
-            imagePath = "/Home/induction stove.jpg";
-            type = "Induction Stove";
+          if (name.includes("gas stove")) { imagePath = "/Home/gas stove.jpg";  type = "Gas Stove";
+          } else if (name.includes("cooker")) { imagePath = "/Home/cooker.jpg"; type = "Cooker";
+          } else if (name.includes("grinder")) { imagePath = "/Home/grinder.jpg"; type = "Mixer";
+          } else if (name.includes("pan")) { imagePath = "/Home/pan.jpg"; type = "Pan";
+          } else if (name.includes("refrigerator")) {imagePath = "/Home/refrigerator.jpg";  type = "Refrigerator";
+          } else if (name.includes("oven")) { imagePath = "/Home/oven.jpg"; type = "Oven";
+          } else if (name.includes("mixer") || name.includes("mixer")) {  imagePath = "/Home/mixer.jpg";type = "Mixer";
+          } else if (name.includes("induction")) {imagePath = "/Home/induction stove.jpg";type = "Induction Stove";
           }
 
           // Add derived "type" field
@@ -157,7 +141,7 @@ const Kitchens = () => {
         <h3>Filters</h3>
 
         <div className="filter-group">
-          <label>Type</label>
+          <label>Name</label>
           <select name="type" onChange={handleFilterChange}>
             <option value="">All</option>
             <option value="Cooker">Cooker</option>

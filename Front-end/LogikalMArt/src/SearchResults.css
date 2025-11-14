@@ -1,0 +1,27 @@
+.products-section {
+  width: 93vw;
+  max-width: none;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 20px; /* space between products */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.no-products {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+  margin-top: 40px;
+}

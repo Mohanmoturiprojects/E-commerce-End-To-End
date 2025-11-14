@@ -1,5 +1,7 @@
 /* 🌸 Main container layout */
 .chocolates-main {
+  width: 95vw;
+  max-width: none;
   display: flex;
   min-height: 100vh;
   background-color: #b8cae246;

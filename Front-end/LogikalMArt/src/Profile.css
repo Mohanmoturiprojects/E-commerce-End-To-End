@@ -1,0 +1,155 @@
+body {
+  background: linear-gradient(135deg, #f6f9fc, #e9f0ff);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Profile Container */
+.profile-container {
+  width: 95vw;
+  max-width: none;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Subtle Hover Effect */
+.profile-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.profile-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.profile-header h2 {
+  font-size: 26px;
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.profile-header p {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Profile Details Card: centered content */ 
+  
+.profile-card {
+  background: #f8faff;
+  border-radius: 15px;
+  padding: 36px 25px;
+  border: 1px solid #dfe6f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-card p {
+  width: 380px;          
+  margin: 15px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 16px;
+  color: #34495e;
+  background: none;
+}
+
+.profile-label {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 140px;       /* Fixed label width keeps all values aligned */
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.profile-value {
+  text-align: left;
+  word-break: break-word;
+}
+/* Change Password Form inside Profile Card */
+.change-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 380px; /* matches profile details width */
+  margin-top: 25px;
+  align-items: center;
+}
+
+.change-password-form input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #dfe6f0;
+  font-size: 15px;
+  color: #2c3e50;
+  background: #ffffff;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.change-password-form input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+  outline: none;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.profile-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.profile-btn:hover {
+  opacity: 0.9;
+}
+
+.profile-btn.cancel-btn {
+  background: #e0e0e0;
+  color: #2c3e50;
+}
+
+.profile-btn.cancel-btn:hover {
+  background: #c5c5c5;
+}
+
+.profile-btn:not(.cancel-btn) {
+  background: #3498db;
+  color: white;
+}
+
+
+@media (max-width: 500px) {
+  .profile-card p {
+    width: 92vw;         /* Responsive: full width for mobile */
+    font-size: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .profile-label {
+    min-width: 0;
+    margin-bottom: 2px;
+  }
+}

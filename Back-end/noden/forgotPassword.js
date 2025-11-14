@@ -41,7 +41,7 @@ router.post("/forgot-password", async (req, res) => {
       html: `
         <h3>Password Reset Request</h3>
         <p>Hello ${user.firstName || "User"},</p>
-        <p>Click below to reset your password (valid for 15 minutes):</p>
+        <p>Click below to reset your password (valid for 60 minutes):</p>
         <a href="${resetLink}" target="_blank">${resetLink}</a>
       `,
     });

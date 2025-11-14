@@ -30,14 +30,10 @@ const Kurtas = () => {
         const updatedKurtas = kurtaData.map((item) => {
           let imagePath = "/Images/default-kurta.jpg";
 
-          if (item.name.toLowerCase().includes("meeshok"))
-            imagePath = "/Womens/meeshok.webp";
-          else if (item.name.toLowerCase().includes("fabindiak"))
-            imagePath = "/Womens/fabindiak.webp";
-          else if (item.name.toLowerCase().includes("peter england"))
-            imagePath = "/Womens/peter england.webp";
-          else if (item.name.toLowerCase().includes("bella"))
-            imagePath = "/Womens/bella.webp";
+          if (item.name.toLowerCase().includes("anarkali")) imagePath = "/Womens/anarkali.webp";
+          else if (item.name.toLowerCase().includes("flared")) imagePath = "/Womens/flared.webp";
+          else if (item.name.toLowerCase().includes("peplum")) imagePath = "/Womens/peplum.webp";
+          else if (item.name.toLowerCase().includes("straight")) imagePath = "/Womens/straight.webp";
 
           return { ...item, image: imagePath };
         });
@@ -164,13 +160,13 @@ const Kurtas = () => {
         </div>
 
         <div className="filter-group">
-          <label>Brand</label>
+          <label>Name</label>
           <select name="brand" onChange={handleFilterChange}>
             <option value="">All</option>
-            <option value="FabIndia">FabIndia</option>
-            <option value="Manyavar">Manyavar</option>
-            <option value="Peter England">Peter England</option>
-            <option value="Meesho">Meesho</option>
+            <option value="anarkali">Anarkali</option>
+            <option value="flared">Flared</option>
+            <option value="peplum">Peplum</option>
+            <option value="straight">Straight</option>
           </select>
         </div>
       </aside>

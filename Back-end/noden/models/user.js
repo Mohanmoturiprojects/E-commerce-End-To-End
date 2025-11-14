@@ -22,8 +22,15 @@ export const User = sequelize.define(
       allowNull: false,
       defaultValue: "USER",
     },
+resetToken: {
+  type: DataTypes.STRING,
+  allowNull: true,
+},
+resetTokenExpiry: {
+  type: DataTypes.DATE,
+  allowNull: true,
+},
 
-    // ✅ New fields for Forgot Password feature
   
   },
   {

@@ -3,8 +3,18 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 /* ---------------------- Helper Functions ---------------------- */
 const getActiveUser = () => {
   try {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    return storedUser?.username || storedUser?.email || "guest";
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) return "guest";
+    const userObj = JSON.parse(storedUser);
+
+    // Return priority: username > email > id > 'guest'
+    return (
+      userObj?.username ||
+      userObj?.email ||
+      userObj?.firstName ||
+      userObj?.id ||
+      "guest"
+    );
   } catch {
     return "guest";
   }
@@ -64,7 +74,14 @@ const ordersSlice = createSlice({
 });
 
 /* ---------------------- Exports ---------------------- */
-export const { AddToCart, IncCart, DecCart, RemoveFromCart, ClearCart, SetCart,} = cartSlice.actions;
+export const {
+  AddToCart,
+  IncCart,
+  DecCart,
+  RemoveFromCart,
+  ClearCart,
+  SetCart,
+} = cartSlice.actions;
 
 export const { AddOrder, SetOrders, ClearOrders } = ordersSlice.actions;
 
@@ -81,10 +98,8 @@ store.subscribe(() => {
   const state = store.getState();
   const currentUser = getActiveUser();
 
-  // ✅ Save cart for current user
+  // ✅ Save cart and orders for current user
   localStorage.setItem(`cart_${currentUser}`, JSON.stringify(state.cart));
-
-  // ✅ Save orders for current user (isolated)
   localStorage.setItem(`orders_${currentUser}`, JSON.stringify(state.orders));
 });
 
@@ -96,7 +111,6 @@ window.addEventListener("load", () => {
 
   if (storedCart.length > 0)
     store.dispatch(cartSlice.actions.SetCart(storedCart));
-
   if (storedOrders.length > 0)
     store.dispatch(ordersSlice.actions.SetOrders(storedOrders));
 });

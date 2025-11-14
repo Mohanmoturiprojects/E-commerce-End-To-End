@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Toys.css";
@@ -143,13 +143,13 @@ const Toys = () => {
         <h3>Filters</h3>
 
         <div className="filter-group">
-          <label>Brand</label>
+          <label>Name</label>
           <select name="brand" onChange={handleFilterChange}>
             <option value="">All</option>
-            <option value="Lego">Lego</option>
-            <option value="Hot Wheels">Hot Wheels</option>
-            <option value="Fisher Price">Fisher Price</option>
-            <option value="Barbie">Barbie</option>
+            <option value="horse">Horse</option>
+            <option value="train"> Train</option>
+            <option value="music">Music</option>
+            <option value="ship">Ship</option>
           </select>
         </div>
 

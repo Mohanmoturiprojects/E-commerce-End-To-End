@@ -12,7 +12,8 @@
   background-color: #f7f7f7;
   font-family: "Poppins", sans-serif;
   padding: 20px;
-  max-width: 1400px;
+  width: 95vw;
+  max-width: none;
   margin: 0 auto; /* center main container horizontally */
   overflow-x: hidden;
 }

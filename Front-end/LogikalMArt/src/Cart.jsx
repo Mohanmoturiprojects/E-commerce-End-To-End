@@ -19,14 +19,14 @@ function Cart() {
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const [manualDiscount, setManualDiscount] = useState(0);
   const [couponDiscount, setCouponDiscount] = useState(0);
-  const [customerEmail, setCustomerEmail] = useState("");
 
   const couponCodeRef = useRef();
   const confettiInstance = useRef(null);
 
-  // ✅ Get logged-in user (from localStorage)
+  // ✅ Get logged-in user from localStorage
   const user = JSON.parse(localStorage.getItem("user"));
-  const username = user?.username || user?.email || "guest";
+  const username = user?.username || "guest";
+  const userEmail = user?.username || user?.email; // use username/email automatically
 
   /* ------------------ 🧩 Load user-specific cart ------------------ */
   useEffect(() => {
@@ -98,15 +98,10 @@ function Cart() {
       return;
     }
 
-    if (!customerEmail) {
-      toast.error("❌ Please enter your email.");
-      return;
-    }
-
     try {
       const order_id = "ORD" + new Date().getTime();
 
-      // 💌 Send confirmation email
+      // 💌 Send confirmation email automatically to logged-in user
       const templateParams = {
         order_id: order_id,
         orders: cartItems.map((item) => ({
@@ -120,7 +115,7 @@ function Cart() {
           tax: tax.toFixed(2),
           total: finalAmount.toFixed(2),
         },
-        email: customerEmail,
+        email: userEmail,
       };
 
       const response = await emailjs.send(
@@ -134,7 +129,7 @@ function Cart() {
         toast.success("✅ Order confirmation email sent!");
       else toast.error("❌ Failed to send confirmation email");
 
-      // ✅ Build Order Payload (send username, not user_id)
+      // ✅ Build Order Payload
       const orderPayload = {
         username: username,
         items: cartItems.map((item) => ({
@@ -146,7 +141,6 @@ function Cart() {
 
       console.log("📦 Sending order payload:", JSON.stringify(orderPayload, null, 2));
 
-      // ✅ Send order data to backend
       const res = await axios.post(
         "http://localhost:8081/api/orders/add",
         orderPayload,
@@ -166,7 +160,7 @@ function Cart() {
         items: cartItems,
         date: new Date().toLocaleString(),
         totalAmount: finalAmount,
-        email: customerEmail,
+        email: userEmail,
       };
 
       dispatch(AddOrder(purchaseDetails));
@@ -185,7 +179,7 @@ function Cart() {
         dispatch(ClearCart());
         localStorage.removeItem(`cart_${username}`);
         setRedirectMessage("🔄 Redirecting to Orders...");
-        setTimeout(() => navigate("/orders"), 3000);
+        setTimeout(() => navigate("/orders"), 2000);
       }, 1000);
     } catch (err) {
       toast.error("❌ Error saving order!");
@@ -292,19 +286,7 @@ function Cart() {
               Final Amount: ₹{finalAmount.toFixed(2)}
             </h2>
 
-            <div>
-              <label className="form-label">
-                Enter your Gmail to receive order confirmation:
-              </label>
-              <input
-                type="email"
-                value={customerEmail}
-                onChange={(e) => setCustomerEmail(e.target.value)}
-                className="form-control"
-                placeholder="Enter your Email"
-              />
-            </div>
-
+            {/* 💳 Payment Options */}
             <div className="payment-methods">
               <h3>Choose Payment Method</h3>
               <button onClick={() => handlePaymentMethodChange("UPI")}>
@@ -319,7 +301,7 @@ function Cart() {
             </div>
 
             {paymentMethod === "UPI" && (
-              <div className="qr-popup">
+            < div className="upi-scanner-container">
                 <h3>Scan to Pay via UPI</h3>
                 <QRCode
                   value={`upi://pay?pa=8247858885@ybl&pn=Lohith%20Cart%20Craze&am=${finalAmount.toFixed(
@@ -368,7 +350,7 @@ function Cart() {
                   />{" "}
                   Payment Confirmed
                 </label>
-                <button onClick={confirmPayment} >Complete Purchase</button>
+                <button onClick={confirmPayment}>Complete Purchase</button>
               </div>
             )}
           </div>

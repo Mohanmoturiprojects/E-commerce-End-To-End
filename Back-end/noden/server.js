@@ -31,7 +31,7 @@ app.use(express.json());
 try {
   await sequelize.authenticate();
   console.log("✅ Connected to MySQL using Sequelize");
-  await sequelize.sync();
+ await sequelize.sync();
 } catch (error) {
   console.error("❌ Sequelize connection error:", error);
 }

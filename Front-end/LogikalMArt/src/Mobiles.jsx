@@ -39,23 +39,14 @@ const Mobiles = () => {
 
           // 🖼️ Set image based on name
           let imagePath = "/Images/default.jpg";
-          if (item.name.toLowerCase().includes("iphone"))
-            imagePath = "/Images/iphone 13.webp";
-          else if (item.name.toLowerCase().includes("iqoo"))
-            imagePath = "/Images/iQOO Z9X 23.webp";
-          else if (item.name.toLowerCase().includes("narzo"))
-            imagePath = "/Images/narzo 10.webp";
-          else if (item.name.toLowerCase().includes("samsung"))
-            imagePath = "/Images/samsung r.jpg";
-          else if (item.name.toLowerCase().includes("galaxy"))
-            imagePath = "/Images/galaxy.jpg";
-          else if (item.name.toLowerCase().includes("jio"))
-            imagePath = "/Images/jio.webp";
-          else if (item.name.toLowerCase().includes("redmi"))
-            imagePath = "/Images/redmi r.jpg";
-          else if (item.name.toLowerCase().includes("carbon"))
-            imagePath = "/Images/carbon.jpg";
-
+          if (item.name.toLowerCase().includes("iphone"))  imagePath = "/Images/iphone 13.webp";
+          else if (item.name.toLowerCase().includes("iqoo")) imagePath = "/Images/iQOO Z9X 23.webp";
+          else if (item.name.toLowerCase().includes("narzo")) imagePath = "/Images/narzo 10.webp";
+          else if (item.name.toLowerCase().includes("samsung")) imagePath = "/Images/samsung r.jpg";
+          else if (item.name.toLowerCase().includes("galaxy")) imagePath = "/Images/galaxy.jpg";
+          else if (item.name.toLowerCase().includes("jio")) imagePath = "/Images/jio.webp";
+          else if (item.name.toLowerCase().includes("redmi")) imagePath = "/Images/redmi r.jpg";
+          else if (item.name.toLowerCase().includes("carbon")) imagePath = "/Images/carbon.jpg";
           return { ...item, image: imagePath, availability: availableQty };
         });
 

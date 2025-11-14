@@ -1,5 +1,7 @@
 /* 🌸 Main container layout */
 .jeanes-main {
+  width: 92vw;
+  max-width: none;
   display: flex;
   background-color: #d3e0ea31;
   min-height: 100vh;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AddToCart, IncCart, DecCart } from "./Store";
+import { AddToCart, IncCart, DecCart } from "./store";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Tracks.css";
@@ -29,15 +29,10 @@ const Tracks = () => {
         const updatedTracks = trackData.map((item) => {
           let imagePath = "/Images/default-track.jpg";
 
-          if (item.name.toLowerCase().includes("neck"))
-            imagePath = "/Mens/neck.webp";
-          else if (item.name.toLowerCase().includes("sports"))
-            imagePath = "/Mens/sports.webp";
-          
-          else if (item.name.toLowerCase().includes("adidas"))
-            imagePath ="/Mens/adidas.webp";
-           else if (item.name.toLowerCase().includes("reebok"))
-            imagePath = "/Mens/reebok.webp";
+          if (item.name.toLowerCase().includes("royster"))  imagePath = "/Mens/royster.webp";
+          else if (item.name.toLowerCase().includes("vebnort")) imagePath = "/Mens/vebnort.webp"; 
+          else if (item.name.toLowerCase().includes("lripsome"))  imagePath ="/Mens/lripsome.webp";
+          else if (item.name.toLowerCase().includes("shotek")) imagePath = "/Mens/shotek.webp";
 
           return { ...item, image: imagePath };
         });
@@ -58,11 +53,11 @@ const Tracks = () => {
   useEffect(() => {
     let filtered = tracks;
 
-    if (filters.color) {
-      filtered = filtered.filter(
-        (t) => t.color && t.color.toLowerCase() === filters.color.toLowerCase()
-      );
-    }
+if (filters.color) {
+  filtered = filtered.filter((b) =>
+    b.name.toLowerCase().includes(filters.color.toLowerCase())
+  );
+}
 
     if (filters.size) {
       filtered = filtered.filter(
@@ -72,7 +67,7 @@ const Tracks = () => {
 
     if (filters.brand) {
       filtered = filtered.filter((t) =>
-        t.name.toLowerCase().includes(filters.brand.toLowerCase())
+        t.brand.toLowerCase().includes(filters.brand.toLowerCase())
       );
     }
 
@@ -136,13 +131,13 @@ const Tracks = () => {
         <h3>Filters</h3>
 
         <div className="filter-group">
-          <label>Color</label>
+          <label>Name</label>
           <select name="color" onChange={handleFilterChange}>
             <option value="">All</option>
-            <option value="Black">Black</option>
-            <option value="Gray">Gray</option>
-            <option value="Blue">Blue</option>
-            <option value="Red">Red</option>
+            <option value="royster">Royster</option>
+            <option value="vebnort">Vebnort</option>
+            <option value="lripsome">Lripsome</option>
+            <option value="shotek">Shotek</option>
           </select>
         </div>
 

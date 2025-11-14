@@ -1,5 +1,7 @@
 /* 🌸 Main container layout */
 .sarees-main {
+  width: 95vw;
+  max-width: none;
   display: flex;
   background-color: #bca9bc31;
   min-height: 100vh;

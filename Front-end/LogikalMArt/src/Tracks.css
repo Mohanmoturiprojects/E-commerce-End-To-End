@@ -21,7 +21,8 @@ body {
   min-height: 100vh;
   padding: 20px;
   background-color: #fafafa;
-  width: calc(100vw - 40px);
+  width: 95vw;
+  max-width: none;
   margin: 20px;
   border-radius: 14px; /* optional soft edges */
 }

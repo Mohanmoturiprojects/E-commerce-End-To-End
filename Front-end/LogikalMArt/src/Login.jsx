@@ -4,43 +4,51 @@ import "./Login.css";
 import axios from "axios";
 
 function Login({ setUser }) {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(""); // username = email
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const res = await axios.post("http://localhost:8081/api/login", {
         username,
         password,
       });
 
-      if (res.data.message === "Login successful" || res.data.status === "success") {
-        alert("✅ Login successful!");
+      if (res.data.message === "Login successful") {
+        const loggedUser = res.data.user;
 
-        // ✅ If logged in as ROLE (SELLER, MANAGER, DELIVERY)
-        if (res.data.type === "role") {
-          const roleData = {
-            role: res.data.role,
-            redirect: res.data.redirect,
-          };
-          localStorage.setItem("role", JSON.stringify(roleData));
-          setUser(roleData);
-          navigate(res.data.redirect); // Navigate to seller/manager/delivery dashboard
-        } 
-        // ✅ Otherwise normal user login
-        else {
-          const userData = { email: username };
-          localStorage.setItem("user", JSON.stringify(userData));
-          setUser(userData);
-          navigate("/home");
+        // Store user info in localStorage
+        localStorage.setItem("user", JSON.stringify(loggedUser));
+
+        // Update app state
+        setUser(loggedUser);
+
+        const role = loggedUser?.role?.toLowerCase();
+        const messageState = { message: "✅ Login successful!" };
+
+        // Navigate based on role with alert message
+        switch (role) {
+          case "seller":
+            navigate("/sellerdashboard", { state: messageState });
+            break;
+          case "delivery":
+            navigate("/deliverydashboard", { state: messageState });
+            break;
+          case "manager":
+            navigate("/managerdashboard", { state: messageState });
+            break;
+          default:
+            navigate("/home", { state: messageState });
         }
       } else {
+        // Alert only on failure
         alert(res.data.message || "Invalid username or password ❌");
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("❌ Login error:", error);
       alert(error.response?.data?.message || "Login failed ❌");
     }
   };
@@ -52,8 +60,8 @@ function Login({ setUser }) {
 
         <input
           className="login-input"
-          type="text"
-          placeholder="Username or Role (e.g., seller, manager)"
+          type="email"
+          placeholder="Enter your email"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -62,7 +70,7 @@ function Login({ setUser }) {
         <input
           className="login-input"
           type="password"
-          placeholder="Password"
+          placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -72,9 +80,14 @@ function Login({ setUser }) {
           Login
         </button>
 
-        <p className="register-text">
-          New user? <Link to="/register">Register here</Link>
-        </p>
+        <div className="login-links">
+          <p className="register-text">
+            New user? <Link to="/register">Register here</Link>
+          </p>
+          <p className="forgot-text">
+            <Link to="/forgotPassword">Forgot Password?</Link>
+          </p>
+        </div>
       </form>
     </div>
   );

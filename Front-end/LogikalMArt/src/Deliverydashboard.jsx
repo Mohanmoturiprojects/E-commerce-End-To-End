@@ -7,9 +7,6 @@ import "./Delivery.css";
 const DeliveryDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [pinInput, setPinInput] = useState("");
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
-  const [showPinModal, setShowPinModal] = useState(false);
 
   const baseURL = "http://localhost:8081/api/delivery";
 
@@ -41,42 +38,19 @@ const DeliveryDashboard = () => {
     }
   };
 
-  // ✅ Open PIN modal for delivery
-  const handleDeliverClick = (id) => {
-    setSelectedOrderId(id);
-    setShowPinModal(true);
-  };
-
-  // ✅ Confirm Delivery with PIN
-  const handleDeliverConfirm = async () => {
-    if (!pinInput.trim()) {
-      toast.warn("⚠️ Enter PIN");
-      return;
-    }
+  // ✅ Deliver Order with confirmation
+  const handleDeliver = async (id) => {
+    const confirmDeliver = window.confirm("Are you sure you want to deliver this order?");
+    if (!confirmDeliver) return;
 
     try {
-      await axios.patch(`${baseURL}/orders/${selectedOrderId}/deliver`, {
-        pin: pinInput,
-      });
-
+      await axios.patch(`${baseURL}/orders/${id}/deliver`);
       toast.success("✅ Order marked as Delivered");
-      setShowPinModal(false);
-      setPinInput("");
       fetchOrders();
     } catch (err) {
       console.error(err);
-      if (err.response?.status === 403) {
-        toast.error("❌ Invalid PIN");
-      } else {
-        toast.error("❌ Failed to deliver order");
-      }
+      toast.error("❌ Failed to deliver order");
     }
-  };
-
-  // ✅ Close PIN modal
-  const closeModal = () => {
-    setShowPinModal(false);
-    setPinInput("");
   };
 
   return (
@@ -90,12 +64,14 @@ const DeliveryDashboard = () => {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Customer</th>
+              <th>Placed At</th>
+              <th>Customer Name</th>
+              <th>Address</th>
               <th>Product</th>
               <th>Quantity</th>
               <th>Total Price</th>
               <th>Status</th>
-              <th>Delivered At</th> {/* ✅ Column label updated */}
+              <th>Delivered At</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -103,10 +79,18 @@ const DeliveryDashboard = () => {
             {orders.map((o) => (
               <tr key={o.id}>
                 <td>{o.id}</td>
-                <td>{o.customer}</td>
-                <td>{o.product}</td>
+                <td>{new Date(o.created_at).toLocaleString()}</td>
+
+                {/* ✅ Customer Details */}
+                <td>{o.orderUser?.firstName || "N/A"}</td>
+                <td>{o.orderUser?.address || "N/A"}</td>
+
+                {/* ✅ Product */}
+                <td>{o.orderProduct?.name || "N/A"}</td>
+
                 <td>{o.quantity}</td>
                 <td>₹{o.total_price}</td>
+
                 <td
                   className={`status ${
                     o.status === "Pending"
@@ -118,11 +102,13 @@ const DeliveryDashboard = () => {
                 >
                   {o.status}
                 </td>
+
                 <td>
                   {o.delivered_at
                     ? new Date(o.delivered_at).toLocaleString()
                     : "-"}
                 </td>
+
                 <td>
                   {o.status === "Pending" && (
                     <button
@@ -135,7 +121,7 @@ const DeliveryDashboard = () => {
                   {o.status === "Shipped" && (
                     <button
                       className="btn deliver"
-                      onClick={() => handleDeliverClick(o.id)}
+                      onClick={() => handleDeliver(o.id)}
                     >
                       Deliver
                     </button>
@@ -145,29 +131,6 @@ const DeliveryDashboard = () => {
             ))}
           </tbody>
         </table>
-      )}
-
-      {/* ✅ PIN Modal */}
-      {showPinModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Enter Delivery PIN</h3>
-            <input
-              type="password"
-              placeholder="Enter PIN (LOGIKAL)"
-              value={pinInput}
-              onChange={(e) => setPinInput(e.target.value)}
-            />
-            <div className="modal-actions">
-              <button className="btn confirm" onClick={handleDeliverConfirm}>
-                Confirm
-              </button>
-              <button className="btn cancel" onClick={closeModal}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
       )}
 
       <ToastContainer position="bottom-right" autoClose={2000} />

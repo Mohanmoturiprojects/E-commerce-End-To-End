@@ -16,7 +16,6 @@ const Cloths = () => {
     color: "",
     size: "",
     brand: "",
-    type: "",
   });
 
   // Fetch products from backend
@@ -31,22 +30,14 @@ const Cloths = () => {
         const updatedCloths = babyData.map((item) => {
           let imagePath = "/Images/default-baby.jpg";
 
-          if (item.name.toLowerCase().includes("dress"))
-            imagePath = "/Kids/dress.jpg";
-          else if (item.name.toLowerCase().includes("trend"))
-            imagePath = "/Kids/trend.jpg";
-          else if (item.name.toLowerCase().includes("fancy"))
-            imagePath = "/Kids/fancy.jpg";
-          else if (item.name.toLowerCase().includes("frocks"))
-            imagePath = "/Kids/frocks.jpg";
-          else if (item.name.toLowerCase().includes("kurtas"))
-            imagePath = "/Kids/kurtas.webp";
-          else if (item.name.toLowerCase().includes("partys"))
-            imagePath = "/Kids/partys.webp";
-          else if (item.name.toLowerCase().includes("clothingset"))
-            imagePath = "/Kids/clothingset.jpg";
-          else if (item.name.toLowerCase().includes("tshirt"))
-            imagePath = "/Kids/tshirt.jpg";
+          if (item.name.toLowerCase().includes("dress")) imagePath = "/Kids/dress.jpg";
+          else if (item.name.toLowerCase().includes("trend")) imagePath = "/Kids/trend.jpg";
+          else if (item.name.toLowerCase().includes("fancy")) imagePath = "/Kids/fancy.jpg";
+          else if (item.name.toLowerCase().includes("frocks")) imagePath = "/Kids/frocks.jpg";
+          else if (item.name.toLowerCase().includes("kurtas")) imagePath = "/Kids/kurtas.webp";
+          else if (item.name.toLowerCase().includes("partys")) imagePath = "/Kids/partys.webp";
+          else if (item.name.toLowerCase().includes("clothingset")) imagePath = "/Kids/clothingset.jpg";
+          else if (item.name.toLowerCase().includes("tshirt"))  imagePath = "/Kids/tshirt.jpg";
 
           return { ...item, image: imagePath };
         });
@@ -153,7 +144,18 @@ const Cloths = () => {
       {/* Sidebar Filters */}
       <aside className="sidebar">
         <h3>Filters</h3>
-
+         
+            <div className="filter-group">
+          <label>Name</label>
+          <select name="brand" onChange={handleFilterChange}>
+            <option value="">All</option>
+            <option value="Dress">Dress</option>
+            <option value="Frocks">Frocks</option>
+            <option value="Tshirt">Tshirt</option>
+            <option value="Kurtas">Kurtas</option>
+          </select>
+        </div>
+        
         <div className="filter-group">
           <label>Color</label>
           <select name="color" onChange={handleFilterChange}>
@@ -176,26 +178,7 @@ const Cloths = () => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <label>Brand</label>
-          <select name="brand" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="Dress">Dress</option>
-            <option value="Frocks">Frocks</option>
-            <option value="Tshirt">Tshirt</option>
-            <option value="Kurtas">Kurtas</option>
-          </select>
-        </div>
-
-        <div className="filter-group">
-          <label>Type</label>
-          <select name="type" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="Casual">Casual</option>
-            <option value="Party">Party</option>
-            <option value="Festive">Festive</option>
-          </select>
-        </div>
+     
       </aside>
 
       {/* Main Product Section */}
