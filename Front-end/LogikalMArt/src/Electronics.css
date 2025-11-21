@@ -1,97 +1,26 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  overflow-x: hidden;
+.electronics-page {
+  padding: 20px;
 }
 
-/* Container that holds the slider */
-.carousel-container {
-  width: 100vw;             /* Full viewport width */
-  height: 100vh;            /* Full viewport height */
-  position: relative;
-  overflow: hidden;
-  background: #000;         /* Background fills around images */
+.title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-/* Slick base structure */
-.slick-slider,
-.slick-list,
-.slick-track {
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) !important; 
+  gap: 5px !important;                                
+  padding: 10px;
+  width: 93vw;
+}
+.product-card {
+  width: 270px !important;   
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.products-grid > div {
   width: 100%;
-  height: 100%;
-}
-
-/* Each slide */
-.slide-item {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
-}
-
-/* ✅ Fit entire image (no cropping) */
-.slide-item img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;       /* Ensure entire image is visible */
-  object-position: center;
-  display: block;
-  transition: transform 1s ease-in-out;
-  background-color: #000;    /* Fills around image if aspect ratio differs */
-}
-
-/* Slight zoom for active slide */
-.slick-active img {
-  transform: scale(1.03);
-}
-
-/* Dots position */
-.slick-dots {
-  bottom: 20px;
-  z-index: 10;
-  position: absolute;
-}
-
-/* Dot appearance */
-.slick-dots li button:before {
-  color: white;
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.slick-dots li.slick-active button:before {
-  color: #ff6600;
-  opacity: 1;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .carousel-container {
-    height: 75vh;
-  }
-
-  .slide-item {
-    height: 75vh;
-  }
-
-  .slide-item img {
-    max-height: 75vh;
-  }
-}
-
-/* Keep slides centered vertically */
-.slick-track {
-  display: flex;
-  align-items: center;
-}
-
-.slick-slide {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
 }
