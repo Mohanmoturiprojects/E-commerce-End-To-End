@@ -1,11 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ProductCard from "./ProductCard";
+import "./Electronics.css";
 
 const Kids = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/products/categoryparent/Kids")
+      .then(res => setProducts(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
   return (
-    <div>
-     <h1>Welcome to kids Related  Things</h1> 
+    <div className="electronics-page">
+      <h2 className="title">Kids</h2>
+
+      <div className="products-grid">
+        {products.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Kids;
