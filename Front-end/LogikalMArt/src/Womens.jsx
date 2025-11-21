@@ -1,21 +1,29 @@
- import React from 'react';
-import WomCarousel from './WomCarousel ';
-
-
-
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ProductCard from "./ProductCard";
+import "./Electronics.css";
 
 const Womens = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/products/categoryparent/Womens")
+      .then(res => setProducts(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
   return (
-    <div>
-     <div style={{ padding: '10px', textAlign: 'center' }}>
-      <h1>Offers & Top sales</h1>
-        <p>Enjoy exciting deals and exclusive seasonal offers on the most popular Women's clothing brands — style, comfort, and confidence all in one place!</p>
+    <div className="electronics-page">
+      <h2 className="title">Womens</h2>
+
+      <div className="products-grid">
+        {products.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
       </div>
-      <WomCarousel />
     </div>
   );
 };
-
 
 export default Womens;
