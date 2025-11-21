@@ -1,20 +1,31 @@
- import React from 'react';
-import MenCarousel from './MenCarousel ';
 
-
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ProductCard from "./ProductCard";
+import "./Electronics.css";
 
 const Mens = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/products/categoryparent/Mens")
+      .then(res => setProducts(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
   return (
-    <div>
-     <div style={{ padding: '10px', textAlign: 'center' }}>
-      <h2>Offers & TopSales</h2>
-        <p>Enjoy exciting deals and exclusive seasonal offers on the most popular men’s clothing brands — style, comfort, and confidence all in one place!</p>
+    <div className="electronics-page">
+      <h2 className="title">Mens</h2>
+
+      <div className="products-grid">
+        {products.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
       </div>
-      <MenCarousel />
     </div>
   );
 };
 
-
 export default Mens;
+
